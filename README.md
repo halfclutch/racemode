@@ -1,3 +1,5 @@
+##NotFastEnuf NOTES:  This is the first test build for RACEMODE in Betaflight.  Accelerometer assist on the pitch axis for both angle and horizon flight modes has been disabled.
+
 ![BetaFlight Notice, version 3.2 will be the last version of Betaflight to support STM32F1 based flight controllers, this includes NAZE, CC3D (original) and CJMCU like flight controllers](https://raw.githubusercontent.com/wiki/betaflight/betaflight/images/betaflight/bf3_2_notice.png)
 
 ![BetaFlight](https://raw.githubusercontent.com/wiki/betaflight/betaflight/images/betaflight/bf_logo.png)
