@@ -325,61 +325,62 @@ void pidCopyProfile(uint8_t dstPidProfileIndex, uint8_t srcPidProfileIndex)
     }
 }
 
+//***********************************************************************************************************************************************************************
+//*************************************************************************HAAAAALLLLLP**********************************************************************************
+//***********************************************************************************************************************************************************************
 // calculates strength of horizon leveling; 0 = none, 1.0 = most leveling
 static float calcHorizonLevelStrength(void)
 {
-    // start with 1.0 at center stick, 0.0 at max stick deflection:
-    float horizonLevelStrength = 1.0f - MAX(getRcDeflectionAbs(FD_ROLL), getRcDeflectionAbs(FD_PITCH));
+    // NFE NOTE: removed stick portion of horizon level strength that started at 1.0 and just defined the variable
+    float horizonLevelStrength;
 
     // 0 at level, 90 at vertical, 180 at inverted (degrees):
     const float currentInclination = MAX(ABS(attitude.values.roll), ABS(attitude.values.pitch)) / 10.0f;
 
-    // horizonTiltExpertMode:  0 = leveling always active when sticks centered,
-    //                         1 = leveling can be totally off when inverted
+    // horizonTiltExpertMode:  0 = horizon type roll racemode (NFE)
+    //                         1 = angle type roll racemode (NFE)
     if (horizonTiltExpertMode) {
+		//NFE NOTE - horizonTransition piece of horizonLevelStrength has been removed and horizonLevelStrength is set to inclinationLevelRatio 
+		//below so it's a function of currentInclination and horizonCutoffDegrees only
+        if (horizonTransition > 0 && horizonCutoffDegrees > 0) {
+                    // if d_level > 0 and horizonTiltEffect < 175
+            // horizonCutoffDegrees: 0 to 125 => 270 to 90 (represents where leveling goes to zero)
+            // inclinationLevelRatio (0.0 to 1.0) is smaller (less leveling)
+            //  for larger inclinations; 0.0 at horizonCutoffDegrees value:
+			//*****************************************************************************************************************************************************************		
+			//NFE NOTE - I added a factor of 2 to the numerator of this ratio so that horizonLevelStrength starts transitioning below 1 half way 
+			//to horizonCutoffDegrees instead of right off of center stick.  This should soften the transition to being locked back in angle behaviour if you roll from inverted back to level
+            const float inclinationLevelRatio = constrainf(((horizonCutoffDegrees-currentInclination)*2) / horizonCutoffDegrees, 0, 1);
+            // apply inclination ratio, which may lower leveling
+            //  to zero regardless of stick position:
+            horizonLevelStrength = inclinationLevelRatio;
+        } else  { // d_level=0 or horizon_tilt_effect>=175 means no leveling
+          horizonLevelStrength = 0;
+		// NFE NOTE:   QUESTION:  Since I removed the horizonTransition piece from horizon - could I just also remove it from 	if (horizonTransition > 0 && horizonCutoffDegrees > 0) above????	  		  
+        }
+		
+	} else { // horizon_tilt_expert_mode = 0 (NFE NOTE - same code as expert mode without the factor of 2 in inclinationLevelRatio)
+			//NFE NOTE - horizonTransition piece of horizonLevelStrength has been removed and horizonLevelStrength is set to inclinationLevelRatio 
+			//below so it's a function of currentInclination and horizonCutoffDegrees only
         if (horizonTransition > 0 && horizonCutoffDegrees > 0) {
                     // if d_level > 0 and horizonTiltEffect < 175
             // horizonCutoffDegrees: 0 to 125 => 270 to 90 (represents where leveling goes to zero)
             // inclinationLevelRatio (0.0 to 1.0) is smaller (less leveling)
             //  for larger inclinations; 0.0 at horizonCutoffDegrees value:
             const float inclinationLevelRatio = constrainf((horizonCutoffDegrees-currentInclination) / horizonCutoffDegrees, 0, 1);
-            // apply configured horizon sensitivity:
-                // when stick is near center (horizonLevelStrength ~= 1.0)
-                //  H_sensitivity value has little effect,
-                // when stick is deflected (horizonLevelStrength near 0.0)
-                //  H_sensitivity value has more effect:
-            horizonLevelStrength = (horizonLevelStrength - 1) * 100 / horizonTransition + 1;
             // apply inclination ratio, which may lower leveling
             //  to zero regardless of stick position:
-            horizonLevelStrength *= inclinationLevelRatio;
+            horizonLevelStrength = inclinationLevelRatio;
         } else  { // d_level=0 or horizon_tilt_effect>=175 means no leveling
           horizonLevelStrength = 0;
-        }
-    } else { // horizon_tilt_expert_mode = 0 (leveling always active when sticks centered)
-        float sensitFact;
-        if (horizonFactorRatio < 1.01f) { // if horizonTiltEffect > 0
-            // horizonFactorRatio: 1.0 to 0.0 (larger means more leveling)
-            // inclinationLevelRatio (0.0 to 1.0) is smaller (less leveling)
-            //  for larger inclinations, goes to 1.0 at inclination==level:
-            const float inclinationLevelRatio = (180-currentInclination)/180 * (1.0f-horizonFactorRatio) + horizonFactorRatio;
-            // apply ratio to configured horizon sensitivity:
-            sensitFact = horizonTransition * inclinationLevelRatio;
-        } else { // horizonTiltEffect=0 for "old" functionality
-            sensitFact = horizonTransition;
-        }
-
-        if (sensitFact <= 0) {           // zero means no leveling
-            horizonLevelStrength = 0;
-        } else {
-            // when stick is near center (horizonLevelStrength ~= 1.0)
-            //  sensitFact value has little effect,
-            // when stick is deflected (horizonLevelStrength near 0.0)
-            //  sensitFact value has more effect:
-            horizonLevelStrength = ((horizonLevelStrength - 1) * (100 / sensitFact)) + 1;
+		// NFE NOTE:   Since I removed the horizonTransition piece from horizon- could I just also remove it from 	if (horizonTransition > 0 && horizonCutoffDegrees > 0) above????	  		  
         }
     }
     return constrainf(horizonLevelStrength, 0, 1);
 }
+//************************************************************************************************************************************************************************
+//************************************************************************************************************************************************************************
+
 
 static float pidLevel(int axis, const pidProfile_t *pidProfile, const rollAndPitchTrims_t *angleTrim, float currentPidSetpoint) {
     // calculate error angle and limit the angle to the max inclination
@@ -397,8 +398,30 @@ static float pidLevel(int axis, const pidProfile_t *pidProfile, const rollAndPit
         // HORIZON mode - mix of ANGLE and ACRO modes
         // mix in errorAngle to currentPidSetpoint to add a little auto-level feel
         const float horizonLevelStrength = calcHorizonLevelStrength();
-        currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);
+//***********************************************************************************************************************************************************************
+//*************************************************************************HAAAAALLLLLP**********************************************************************************
+//***********************************************************************************************************************************************************************
+// Can I make this conditional statement - will it work???
+		if (horizonTiltExpertMode) {
+
+			//  Can I do this???  I need to acccess the value of currentInclination from the calcHorizonLevelStrength void
+			//  If there is a way to access this variable, then it should create a regular angle mode with limited max angle on stick inputs to the value set for max angle in the configurator,
+			//  but if pitch axis goes far enough around to pass max angle - it should activate my modified horizon behaviour which handles being inverted nicely.  Also, if you retrun to level via 
+			//  roll axis - it should keep a good portion of the softening on the return to level in place as inclinationLevelRatio is approaching 1 and overlaps the max angle where it pops back into level mode behaviour.
+			if (currentInclination < pidProfile->levelAngleLimit ) {
+			//  This should make roll stick behave like it does in angle mode constraining stick input to max angle just like angle mode
+			currentPidSetpoint = errorAngle * horizonGain;	
+			}else{
+			//  modified horizon expert mode behaviour beyond max angle for roll axis that is only reachable by pitching to inverted			
+			currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);		
+			}
+		}else{
+		//  horizon type behaviour without a level limit			
+		currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);	
+		}
     }
+//************************************************************************************************************************************************************************    
+//************************************************************************************************************************************************************************
     return currentPidSetpoint;
 }
 
@@ -444,10 +467,18 @@ void pidController(const pidProfile_t *pidProfile, const rollAndPitchTrims_t *an
             currentPidSetpoint = accelerationLimit(axis, currentPidSetpoint);
         }
         // Yaw control is GYRO based, direct sticks control is applied to rate PID
-        if ((FLIGHT_MODE(ANGLE_MODE) || FLIGHT_MODE(HORIZON_MODE)) && ((axis != YAW)&&(axis !=PITCH))) {
+//***********************************************************************************************************************************************************************
+//*************************************************************************HAAAAALLLLLP**********************************************************************************
+//***********************************************************************************************************************************************************************
+//NFE NOTE - I seperated the flight mode angle or horizon where its told to ignore yaw and I hope I'm telling it to ignore yaw and pitch in horizon but not break angle mode   
+		if ((FLIGHT_MODE(HORIZON_MODE)) && ((axis != YAW)&&(axis !=PITCH))) {
             currentPidSetpoint = pidLevel(axis, pidProfile, angleTrim, currentPidSetpoint);
-        }
-
+		}
+		if ((FLIGHT_MODE(ANGLE_MODE)) && axis != YAW) {
+            currentPidSetpoint = pidLevel(axis, pidProfile, angleTrim, currentPidSetpoint);
+		}
+//************************************************************************************************************************************************************************
+//************************************************************************************************************************************************************************
         // -----calculate error rate
         const float gyroRate = gyro.gyroADCf[axis]; // Process variable from gyro output in deg/sec
         float errorRate = currentPidSetpoint - gyroRate; // r - y
