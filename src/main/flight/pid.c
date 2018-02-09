@@ -350,7 +350,7 @@ static float calcHorizonLevelStrength(const pidProfile_t *pidProfile)
         	const float inclinationLevelRatio = constrainf(((horizonCutoffDegrees-currentInclination)*racemodeHorizonTransitionFactor) / horizonCutoffDegrees, 0, 1);
             	// apply inclination ratio to horizonLevelStrength which lower leveling to zero as a function of angle regardless of stick position
            	 horizonLevelStrength = inclinationLevelRatio;
-        } else  { // d_level=0 or horizon_tilt_effect>=175 means no leveling
+        } else  { // horizon_tilt_effect>=175 means no leveling
          	 horizonLevelStrength = 0;	  		  
         }
 		
