@@ -98,7 +98,7 @@ void resetPidProfile(pidProfile_t *pidProfile)
             [PID_POS] =   { 15, 0, 0 },     // POSHOLD_P * 100, POSHOLD_I * 100,
             [PID_POSR] =  { 34, 14, 53 },   // POSHOLD_RATE_P * 10, POSHOLD_RATE_I * 100, POSHOLD_RATE_D * 1000,
             [PID_NAVR] =  { 25, 33, 83 },   // NAV_P * 10, NAV_I * 100, NAV_D * 1000
-            [PID_LEVEL] = { 50, 50, 75 },
+            [PID_LEVEL] = { 50, 50, 0 },
             [PID_MAG] =   { 40, 0, 0 },
             [PID_VEL] =   { 55, 55, 75 }
         },
