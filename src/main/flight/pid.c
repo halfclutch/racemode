@@ -327,28 +327,27 @@ void pidCopyProfile(uint8_t dstPidProfileIndex, uint8_t srcPidProfileIndex)
 
 
 // calculates strength of RACEMODEhoriozon leveling and the strength and position range of RACEMODEangle leveling beyond levelAngleLimit; 0 = none, 1.0 = most leveling
-static float calcHorizonLevelStrength(void)
+static float calcHorizonLevelStrength(const pidProfile_t *pidProfile)
 {   //NFE NOTE - horizonTransition piece of horizonLevelStrength has been removed and horizonLevelStrength is set to inclinationLevelRatio for RACEMODE
 	
     // start with 1.0 at center stick, 0.0 at max stick deflection:
     float horizonLevelStrength;
     // 0 at level, 90 at vertical, 180 at inverted (degrees):
     const float currentInclination = MAX(ABS(attitude.values.roll), ABS(attitude.values.pitch)) / 10.0f;
-//*************************************************************************************************************************************************************************
-//******************************************************************HAAAALLLLLLLP******************************************************************************************
-//How do I call the level angle limit into this define
-	// Used as a factor in the numerator of inclinationLevelRatio - this will cause the fade of leveling strength to start at levelAngleLimit for RACEMODEangle
-	//const float racemodeTransitionFactor = horizonCutoffDegrees/(horizonCutoffDegrees-(pidProfile->levelAngleLimit));
+    // Used as a factor in the numerator of inclinationLevelRatio - this will cause the entry point of the fade of leveling strength to be adjustable via horizon transition in configurator for RACEMODEhorizon	
+    const float racemodeHorizonTransitionFactor = horizonCutoffDegrees/(horizonCutoffDegrees-horizonTransition);
+    // Used as a factor in the numerator of inclinationLevelRatio - this will cause the fade of leveling strength to start at levelAngleLimit for RACEMODEangle
+    const float racemodeAngleTransitionFactor = horizonCutoffDegrees/(horizonCutoffDegrees-(pidProfile->levelAngleLimit));
 
     // horizonTiltExpertMode:  0 = RACEMODEangle - ANGLE LIMIT BEHAVIOUR ON ROLL AXIS
     //                         1 = RACEMODEhoriozon - HORIZON TYPE BEHAVIOUR ON ROLL AXIS
 	
     if (horizonTiltExpertMode) { //determines the leveling strength of RACEMODEhoriozon
 		
-        if (horizonTransition > 0 && horizonCutoffDegrees > 0) { // if d_level > 0 and horizonTiltEffect < 175                    
+        if (horizonCutoffDegrees > 0) { // if d_level > 0 and horizonTiltEffect < 175                    
 		//causes leveling to fade from center stick to horizonCutoffDegrees	where leveling goes to zero	
 		//horizonTransition (if this variable is open now) can be used to move the begining point of leveling fade off of zero stick - this needs work
-        	const float inclinationLevelRatio = constrainf((horizonCutoffDegrees-currentInclination) / horizonCutoffDegrees, 0, 1);
+        	const float inclinationLevelRatio = constrainf(((horizonCutoffDegrees-currentInclination)*racemodeHorizonTransitionFactor) / horizonCutoffDegrees, 0, 1);
             	// apply inclination ratio to horizonLevelStrength which lower leveling to zero as a function of angle regardless of stick position
            	 horizonLevelStrength = inclinationLevelRatio;
         } else  { // d_level=0 or horizon_tilt_effect>=175 means no leveling
@@ -359,7 +358,7 @@ static float calcHorizonLevelStrength(void)
 			
         if (horizonCutoffDegrees > 0) { //horizonTiltEffect < 175
 		// the factor of 2 is a placeholderto move strength reduction further out should be replaced by racemodeTransitionFactor so that transition point of horizon type behaviour moves to match levelAngleLimit
-            	const float inclinationLevelRatio = constrainf(((horizonCutoffDegrees-currentInclination)*2) / horizonCutoffDegrees, 0, 1);
+            	const float inclinationLevelRatio = constrainf(((horizonCutoffDegrees-currentInclination)*racemodeAngleTransitionFactor) / horizonCutoffDegrees, 0, 1);
           	horizonLevelStrength = inclinationLevelRatio;
         } else  { //horizon_tilt_effect>=175 means no leveling
          	horizonLevelStrength = 0; 		  
@@ -383,7 +382,7 @@ static float pidLevel(int axis, const pidProfile_t *pidProfile, const rollAndPit
         // ANGLE mode - control is angle based
         currentPidSetpoint = errorAngle * levelGain;
     } else { // HORIZON hacked into 2 types of RACEMODE  - Expert Mode On is RACEMODEhoriozon or Off is RACEMODEangle  
-        const float horizonLevelStrength = calcHorizonLevelStrength();
+        const float horizonLevelStrength = alcHorizonLevelStrength(pidProfile);
 		const float racemodeInclination = MAX(ABS(attitude.values.roll), ABS(attitude.values.pitch)) / 10.0f;
 		if (horizonTiltExpertMode) {//  horizon type racemode behaviour without a level limit - horizonTiltExpertMode is ON	
 			currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);
