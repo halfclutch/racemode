@@ -1,6 +1,22 @@
-## NotFastEnuf NOTES:  This is the first test build for RACEMODE in Betaflight.  Accelerometer assist on the pitch axis for both angle and horizon flight modes has been disabled.
+## NotFastEnuf NOTES:  This is a working beta test build for RACEMODE in Betaflight.
 
-## This build is currently broken as I seek help attempting to restore level mode behaviour and re-write horizon and horizon epert mode into two forms of racemode. Stand by to stand by to stand by - ITS NOT WORKING YET!
+## RACEMODEangle replaces Horizon mode while HorizonExpertMode is OFF from CLI
+          Function is exactly like ANGLE mode except pitch axis is pure acro (rate mode behaviour).  
+          Roll axis will be limited to set max angle limit from configurator.  Inverted behaviour 
+          of roll axis is adjustable using Horizon tilt effect variable on CLI.
+## RACEMODEhorizon replaces Horizon mode while HorizonExpertMode is On from CLI
+        Function is similar to old horizon epert mode except pitch axis is  pure acro (rate mode behaviour).
+        Horizon transition variable controlling decreased leveling strength as a function of stick position
+        has been eliminated in favor of leveling strength solely dependent on angle of inclination.   Leveling
+        strength starts fading as sticks are moved off center and continues fading to zero at tilt effect angle
+        leaving only acro behaviour on roll axis.
+
+To Do List:
+create variable racemodeTransitionFactor to be used in the RACEMODEangle leveling strength function which will automatically move the transitition point of horizon type behaviour on roll axis to seamlessly match the edge of leveling set by ma angle limit.  Currently a set value is being used to move out this transition closer to matching.
+
+re-purpose old horizon transition variable which is accessible in the pids page of the configurator to be used as a transition factor in RACEMODEhorizon.  It will be possible to pick the transition angle where leveling starts to fade using horizon transition in the future just as its possible to pick the angle where leveling strength reaches zero with the horizon tilt effect variable now in CLI.  Current behaviour is leveling strength starts fading as sticks are moved off center and continues fading to zero at tilt effect angle
+
+
 
 ![BetaFlight Notice, version 3.2 will be the last version of Betaflight to support STM32F1 based flight controllers, this includes NAZE, CC3D (original) and CJMCU like flight controllers](https://raw.githubusercontent.com/wiki/betaflight/betaflight/images/betaflight/bf3_2_notice.png)
 
