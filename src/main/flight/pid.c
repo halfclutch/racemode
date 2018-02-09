@@ -338,7 +338,7 @@ static float calcHorizonLevelStrength(void)
 //******************************************************************HAAAALLLLLLLP******************************************************************************************
 //How do I call the level angle limit into this define
 	// Used as a factor in the numerator of inclinationLevelRatio - this will cause the fade of leveling strength to start at levelAngleLimit for RACEMODEangle
-	//const float racemodeTransitionFactor = horizonCutoffDegrees/(horizonCutoffDegrees-(pidProfile->levelAngleLimit))
+	//const float racemodeTransitionFactor = horizonCutoffDegrees/(horizonCutoffDegrees-(pidProfile->levelAngleLimit));
 
     // horizonTiltExpertMode:  0 = RACEMODEangle - ANGLE LIMIT BEHAVIOUR ON ROLL AXIS
     //                         1 = RACEMODEhoriozon - HORIZON TYPE BEHAVIOUR ON ROLL AXIS
