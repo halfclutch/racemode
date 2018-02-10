@@ -1,20 +1,21 @@
-## NotFastEnuf NOTES:  This is a working beta test build for RACEMODE in Betaflight.
+## Welcome NotFastEnuf's RACEMODE in Betaflight project
+RACEMODE is a complete rewrite of the Horizon Flight Mode in betaflight intended for whoop racers.  The basic recipe for racemode is leveling assistance on the roll axis and pure acro (rate mode) behavior on the pitch axis.  To activate racemode, flash a RACEMODE_Betaflight build and activate Horizon flight mode via switch as configured on the modes tab.
 
-## RACEMODEangle replaces Horizon mode while HorizonExpertMode is OFF from CLI
-          Function is exactly like ANGLE mode except pitch axis is pure acro (rate mode behaviour).  
-          Roll axis will be limited to set max angle limit from configurator.  Inverted behaviour 
-          of roll axis is adjustable using Horizon tilt effect variable on CLI.
-## RACEMODEhorizon replaces Horizon mode while HorizonExpertMode is On from CLI
-        Function is similar to old horizon epert mode except pitch axis is  pure acro (rate mode behaviour).
-        Horizon transition variable controlling decreased leveling strength as a function of stick position
-        has been eliminated in favor of leveling strength solely dependent on angle of inclination.   Leveling
-        strength starts fading as sticks are moved off center and continues fading to zero at tilt effect angle
-        leaving only acro behaviour on roll axis.
+RACEMODEangle is a flight mode that will limit your roll axis to the max angle limit value set on the pids tab.  The leveling strength below max angle limit is adjustable by changing the horizon strength variable. Within angles below max angle limit, roll axis (only) will feel & behave exactly like angle mode does.  Because it will be possible to reach angles beyond max angle limit by pitching to inverted orientations - inverted behavior on the roll axis consists of 2 zones. In between 180 degrees inverted and max angle limit, there is a user set angle via CLI called racemode_tilt_effect.  Between 180 degrees inverted roll and racemode_tilt_effect value - behavior is pure acro (rate mode).  Passing racemode_tilt_effect angle will start to fade in leveling behaviour gradually till the craft reaches max angle limit and pops back into restricted angle mode type behavior. Default value for racemode_tilt_effect is 85 degrees and is suggested to be at least 20 degrees above max angle limit so a decent transition zone exists between acro and leveled zones.  RACEMODEangle is the default type of racemode and corresponds to CLI variable set racemode_horizon = OFF
 
-To Do List:
-create variable racemodeTransitionFactor to be used in the RACEMODEangle leveling strength function which will automatically move the transitition point of horizon type behaviour on roll axis to seamlessly match the edge of leveling set by ma angle limit.  Currently a set value is being used to move out this transition closer to matching.
+RACEMODEhorizon is an unrestricted flight mode on roll axis and can be activated to replace RACEMODEangle on CLI with the command set racemode_horizon = ON.   
 
-re-purpose old horizon transition variable which is accessible in the pids page of the configurator to be used as a transition factor in RACEMODEhorizon.  It will be possible to pick the transition angle where leveling starts to fade using horizon transition in the future just as its possible to pick the angle where leveling strength reaches zero with the horizon tilt effect variable now in CLI.  Current behaviour is leveling strength starts fading as sticks are moved off center and continues fading to zero at tilt effect angle
+
+
+
+
+        
+        
+        
+        
+        
+
+
 
 
 
