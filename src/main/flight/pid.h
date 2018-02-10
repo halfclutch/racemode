@@ -86,7 +86,7 @@ typedef struct pidProfile_s {
     uint8_t levelAngleLimit;                // Max angle in degrees in level mode
 
     uint8_t horizon_tilt_effect;            // inclination factor for Horizon mode
-    uint8_t horizon_tilt_expert_mode;       // OFF or ON
+    uint8_t racemode_horizon;               // OFF or ON
 
     // Betaflight PID controller parameters
     uint16_t itermThrottleThreshold;        // max allowed throttle delta before iterm accelerated in ms
