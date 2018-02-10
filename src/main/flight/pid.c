@@ -128,7 +128,7 @@ void resetPidProfile(pidProfile_t *pidProfile)
         .crash_gthreshold = 400,    // degrees/second
         .crash_setpoint_threshold = 350, // degrees/second
         .crash_recovery = PID_CRASH_RECOVERY_OFF, // off by default
-        .horizon_tilt_effect = 130,
+        .racemode_tilt_effect = 130,
         .racemode_horizon = false,
         .crash_limit_yaw = 200,
         .itermLimit = 150
@@ -292,7 +292,7 @@ void pidInitConfig(const pidProfile_t *pidProfile)
     horizonTransition = (float)pidProfile->pid[PID_LEVEL].D;
     horizonTiltExpertMode = pidProfile->racemode_horizon;  
     horizonCutoffDegrees = constrainf((pidProfile->racemode_tilt_effect) * 1.0f, 0, 180);  //  horizon_tilt_effect
-    horizonFactorRatio = (100 - pidProfile->horizon_tilt_effect) * 0.01f;
+    horizonFactorRatio = (100 - pidProfile->racemode_tilt_effect) * 0.01f;
     maxVelocity[FD_ROLL] = maxVelocity[FD_PITCH] = pidProfile->rateAccelLimit * 100 * dT;
     maxVelocity[FD_YAW] = pidProfile->yawRateAccelLimit * 100 * dT;
     const float ITermWindupPoint = (float)pidProfile->itermWindupPointPercent / 100.0f;
@@ -380,7 +380,7 @@ static float pidLevel(int axis, const pidProfile_t *pidProfile, const rollAndPit
         // ANGLE mode - control is angle based
         currentPidSetpoint = errorAngle * levelGain;
     } else { // HORIZON hacked into 2 types of RACEMODE  - Expert Mode On is RACEMODEhoriozon or Off is RACEMODEangle  
-        const float horizonLevelStrength = alcHorizonLevelStrength(pidProfile);
+        const float horizonLevelStrength = calcHorizonLevelStrength(pidProfile);
 		const float racemodeInclination = MAX(ABS(attitude.values.roll), ABS(attitude.values.pitch)) / 10.0f;
 		if (horizonTiltExpertMode) {//  horizon type racemode behaviour without a level limit - horizonTiltExpertMode is ON	
 			currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);
