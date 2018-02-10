@@ -383,7 +383,7 @@ static float pidLevel(int axis, const pidProfile_t *pidProfile, const rollAndPit
         const float horizonLevelStrength = calcHorizonLevelStrength(pidProfile);
 		const float racemodeInclination = MAX(ABS(attitude.values.roll), ABS(attitude.values.pitch)) / 10.0f;
 		if (horizonTiltExpertMode) {//  horizon type racemode behaviour without a level limit - horizonTiltExpertMode is ON	
-			currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);
+			currentPidSetpoint = (((currentPidSetpoint * (1 - horizonLevelStrength)) + currentPidSetpoint) / 2) + (errorAngle * horizonGain * horizonLevelStrength);
 		}else{  //angle limit type racemode behaviour  - horizonTiltExpertMode is OFF			
 			// if current angle is less than max angle limit
 			if (racemodeInclination < (pidProfile->levelAngleLimit)) {
@@ -391,7 +391,7 @@ static float pidLevel(int axis, const pidProfile_t *pidProfile, const rollAndPit
 			currentPidSetpoint = errorAngle * horizonGain;	
 			}else{
 			//  modified horizon expert mode behaviour beyond max angle limit for roll axis that is only reachable by pitching to inverted or returning from inverted via roll axis		
-			currentPidSetpoint = currentPidSetpoint + (errorAngle * horizonGain * horizonLevelStrength);		
+			currentPidSetpoint = (((currentPidSetpoint * (1 - horizonLevelStrength)) + currentPidSetpoint) / 2) + (errorAngle * horizonGain * horizonLevelStrength);		
 			}		
 		}
     }
