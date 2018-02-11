@@ -12,7 +12,7 @@ Join discussion of RACEMODE on betaflight, or reach out to request your fc targe
 
 **Download your RACEMODE target here:** https://github.com/NotFastEnuf/betaflight/releases/tag/v3.2.4
 
-*-NotFastEnuf
+*-NotFastEnuf*
 
 
 
