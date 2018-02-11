@@ -10,9 +10,9 @@
 
 Join discussion of RACEMODE on betaflight, or reach out to request your fc target be compiled and posted for download here:  insert mmc link here
 
-Download your RACEMODE target here: https://github.com/NotFastEnuf/betaflight/releases/tag/v3.2.4
+**Download your RACEMODE target here:** https://github.com/NotFastEnuf/betaflight/releases/tag/v3.2.4
 
--NotFastEnuf
+*-NotFastEnuf
 
 
 
