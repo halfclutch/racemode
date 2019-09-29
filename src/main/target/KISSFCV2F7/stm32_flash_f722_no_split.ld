@@ -16,6 +16,12 @@ ENTRY(Reset_Handler)
 /* Specify the memory areas */
 MEMORY
 {
+<<<<<<< HEAD
+=======
+    ITCM_ISR (rx)     : ORIGIN = 0x00000000, LENGTH = 1K
+    ITCM_RAM (rx)     : ORIGIN = 0x00000400, LENGTH = 15K
+
+>>>>>>> test
     /* Bootloader stays in the first sector (16K) */
     FLASH_CONFIG (r)  : ORIGIN = 0x08004000, LENGTH = 16K /*second (16K) sector for eeprom emulation*/
     FLASH (rx)        : ORIGIN = 0x08008000, LENGTH = 480K /*main fw*/
@@ -27,6 +33,10 @@ MEMORY
 
 /* note TCM could be used for stack */
 REGION_ALIAS("STACKRAM", TCM)
+<<<<<<< HEAD
+=======
+REGION_ALIAS("FASTRAM", TCM)
+>>>>>>> test
 
 
 /* Entry Point */
@@ -55,6 +65,22 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
+<<<<<<< HEAD
+=======
+  /* Critical program code goes into ITCM RAM */
+  /* Copy specific fast-executing code to ITCM RAM */ 
+  tcm_code = LOADADDR(.tcm_code); 
+  .tcm_code :
+  {
+    . = ALIGN(4);
+    tcm_code_start = .; 
+    *(.tcm_code)
+    *(.tcm_code*)
+    . = ALIGN(4);
+    tcm_code_end = .; 
+  } >ITCM_RAM AT >FLASH
+
+>>>>>>> test
   /* The program code and other data goes into FLASH */
   .text :
   {

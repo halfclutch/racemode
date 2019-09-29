@@ -17,11 +17,14 @@
 
 #pragma once
 
-#define CRSF_BAUDRATE           420000
+#include "interface/crsf_protocol.h"
+
+
 #define CRSF_PORT_OPTIONS       (SERIAL_STOPBITS_1 | SERIAL_PARITY_NO)
 #define CRSF_PORT_MODE          MODE_RXTX
 
 #define CRSF_MAX_CHANNEL        16
+<<<<<<< HEAD
 #define CRSF_MSP_RX_BUF_SIZE 128
 #define CRSF_MSP_TX_BUF_SIZE 128
 
@@ -72,6 +75,8 @@ enum {
 
 #define CRSF_PAYLOAD_SIZE_MAX   60
 #define CRSF_FRAME_SIZE_MAX     (CRSF_PAYLOAD_SIZE_MAX + 4)
+=======
+>>>>>>> test
 
 typedef struct crsfFrameDef_s {
     uint8_t deviceAddress;

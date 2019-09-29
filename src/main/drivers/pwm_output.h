@@ -61,6 +61,8 @@ typedef enum {
     DSHOT_CMD_LED1_OFF, // BLHeli32 only
     DSHOT_CMD_LED2_OFF, // BLHeli32 only
     DSHOT_CMD_LED3_OFF, // BLHeli32 only
+    DSHOT_CMD_AUDIO_STREAM_MODE_ON_OFF = 30, // KISS audio Stream mode on/Off
+    DSHOT_CMD_SILENT_MODE_ON_OFF = 31, // KISS silent Mode on/Off
     DSHOT_CMD_MAX = 47
 } dshotCommands_e;
 
@@ -107,21 +109,36 @@ typedef enum {
 
 typedef struct {
     TIM_TypeDef *timer;
+#if defined(USE_DSHOT_DMAR)
+#if !defined(USE_HAL_DRIVER)
+#ifdef STM32F3
+    DMA_Channel_TypeDef *dmaBurstRef;
+#else
+    DMA_Stream_TypeDef *dmaBurstRef;
+#endif
+    uint16_t dmaBurstLength;
+#endif
+    uint32_t dmaBurstBuffer[DSHOT_DMA_BUFFER_SIZE * 4];
+#else
     uint16_t timerDmaSources;
+#endif
 } motorDmaTimer_t;
 
 typedef struct {
     ioTag_t ioTag;
     const timerHardware_t *timerHardware;
     uint16_t value;
+#if !defined(USE_DSHOT_DMAR)
     uint16_t timerDmaSource;
+#endif
+    motorDmaTimer_t *timer;
     volatile bool requestTelemetry;
 #if defined(STM32F3) || defined(STM32F4) || defined(STM32F7)
     uint32_t dmaBuffer[DSHOT_DMA_BUFFER_SIZE];
 #else
     uint8_t dmaBuffer[DSHOT_DMA_BUFFER_SIZE];
 #endif
-#if defined(STM32F7)
+#if defined(USE_HAL_DRIVER)
     TIM_HandleTypeDef TimHandle;
     DMA_HandleTypeDef hdma_tim;
     uint16_t timerDmaIndex;
@@ -172,7 +189,7 @@ void pwmServoConfig(const struct timerHardware_s *timerHardware, uint8_t servoIn
 bool isMotorProtocolDshot(void);
 
 #ifdef USE_DSHOT
-typedef uint8_t loadDmaBufferFn(motorDmaOutput_t *const motor, uint16_t packet);  // function pointer used to encode a digital motor value into the DMA buffer representation
+typedef uint8_t loadDmaBufferFn(uint32_t *dmaBuffer, int stride, uint16_t packet);  // function pointer used to encode a digital motor value into the DMA buffer representation
 
 uint16_t prepareDshotPacket(motorDmaOutput_t *const motor, uint16_t value);
 

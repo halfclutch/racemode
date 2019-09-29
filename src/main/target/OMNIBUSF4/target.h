@@ -15,7 +15,7 @@
 
 #pragma once
 
-#define TARGET_CONFIG
+#define USE_TARGET_CONFIG
 
 #if defined(OMNIBUSF4SD)
 #define TARGET_BOARD_IDENTIFIER "OBSD"
@@ -53,6 +53,10 @@
 #define BEEPER                  PB4
 #define BEEPER_INVERTED
 
+#if defined(OMNIBUSF4SD) || defined(DYSF4PRO)
+#define USE_DSHOT_DMAR
+#endif
+
 #ifdef OMNIBUSF4SD
 // These inverter control pins collide with timer channels on CH5 and CH6 pads.
 // Users of these timers/pads must un-map the inverter assignment explicitly.
@@ -64,10 +68,10 @@
 #define INVERTER_PIN_UART1      PC0 // PC0 used as inverter select GPIO XXX this is not used --- remove it at the next major release
 #endif
 
-#define ACC
+#define USE_ACC
 #define USE_ACC_SPI_MPU6000
 
-#define GYRO
+#define USE_GYRO
 #define USE_GYRO_SPI_MPU6000
 
 #define MPU6000_CS_PIN          PA4
@@ -83,7 +87,11 @@
 #define ACC_MPU6000_ALIGN        CW270_DEG
 #elif defined(XRACERF4) || defined(EXUAVF4PRO)
 #define GYRO_MPU6000_ALIGN       CW90_DEG
+<<<<<<< HEAD
 #define ACC_MPU6000_ALIGN        CW90_DEG 
+=======
+#define ACC_MPU6000_ALIGN        CW90_DEG
+>>>>>>> test
 #else
 #define GYRO_MPU6000_ALIGN       CW180_DEG
 #define ACC_MPU6000_ALIGN        CW180_DEG
@@ -101,14 +109,14 @@
 #define ACC_MPU6500_ALIGN       ACC_MPU6000_ALIGN
 #endif
 
-#define MAG
+#define USE_MAG
 #define USE_MAG_HMC5883
 #define MAG_HMC5883_ALIGN       CW90_DEG
 
 //#define USE_MAG_NAZA                   // Delete this on next major release
 //#define MAG_NAZA_ALIGN CW180_DEG_FLIP  // Ditto
 
-#define BARO
+#define USE_BARO
 #if defined(OMNIBUSF4SD)
 #define USE_BARO_SPI_BMP280
 #define BMP280_SPI_INSTANCE     SPI3
@@ -125,7 +133,6 @@
 #define DEFAULT_BARO_BMP280
 #endif
 
-#define OSD
 #define USE_MAX7456
 #define MAX7456_SPI_INSTANCE    SPI3
 #define MAX7456_SPI_CS_PIN      PA15
@@ -145,9 +152,7 @@
 #define SDCARD_SPI_FULL_SPEED_CLOCK_DIVIDER 4 // 21MHz
 
 #define SDCARD_DMA_CHANNEL_TX                   DMA1_Stream4
-#define SDCARD_DMA_CHANNEL_TX_COMPLETE_FLAG     DMA_FLAG_TCIF4
-#define SDCARD_DMA_CLK                          RCC_AHB1Periph_DMA1
-#define SDCARD_DMA_CHANNEL                      DMA_Channel_0
+#define SDCARD_DMA_CHANNEL                      0
 #elif defined(LUXF4OSD)
 #define ENABLE_BLACKBOX_LOGGING_ON_SPIFLASH_BY_DEFAULT
 #define M25P16_CS_PIN           PB12
@@ -232,6 +237,9 @@
 #define I2C_DEVICE              (I2CDEV_2)
 
 #define USE_ADC
+#define ADC_INSTANCE            ADC2
+//#define ADC_INSTANCE            ADC1
+
 #define CURRENT_METER_ADC_PIN   PC1  // Direct from CRNT pad (part of onboard sensor for Pro)
 #define VBAT_ADC_PIN            PC2  // 11:1 (10K + 1K) divider
 #ifdef DYSF4PRO
@@ -240,9 +248,13 @@
 #define RSSI_ADC_PIN            PA0  // Direct from RSSI pad
 #endif
 
-#define TRANSPONDER
+#define USE_TRANSPONDER
 
-#define SONAR
+#define USE_RANGEFINDER
+#define USE_RANGEFINDER_HCSR04
+#define RANGEFINDER_HCSR04_TRIGGER_PIN     PA1
+#define RANGEFINDER_HCSR04_ECHO_PIN        PA8
+#define USE_RANGEFINDER_TF
 
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
 

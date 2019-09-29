@@ -19,7 +19,11 @@
 
 #include "common/axis.h"
 #include "common/time.h"
+<<<<<<< HEAD
 #include "config/parameter_group.h"
+=======
+#include "pg/pg.h"
+>>>>>>> test
 #include "drivers/bus.h"
 #include "drivers/sensor.h"
 
@@ -70,6 +74,13 @@ typedef struct gyroConfig_s {
     uint16_t gyro_soft_notch_hz_2;
     uint16_t gyro_soft_notch_cutoff_2;
     gyroOverflowCheck_e checkOverflow;
+<<<<<<< HEAD
+=======
+    uint16_t gyro_filter_q;
+    uint16_t gyro_filter_r;
+    uint16_t gyro_filter_p;
+    int16_t  gyro_offset_yaw;
+>>>>>>> test
 } gyroConfig_t;
 
 PG_DECLARE(gyroConfig_t, gyroConfig);
@@ -78,6 +89,10 @@ bool gyroInit(void);
 
 void gyroInitFilters(void);
 void gyroUpdate(timeUs_t currentTimeUs);
+<<<<<<< HEAD
+=======
+bool gyroGetAccumulationAverage(float *accumulation);
+>>>>>>> test
 const busDevice_t *gyroSensorBus(void);
 struct mpuConfiguration_s;
 const struct mpuConfiguration_s *gyroMpuConfiguration(void);

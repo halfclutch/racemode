@@ -45,14 +45,22 @@
 #define MPU_INT_EXTI            PC3
 #define USE_MPU_DATA_READY_SIGNAL
 
+<<<<<<< HEAD
 #define GYRO
+=======
+#define USE_GYRO
+>>>>>>> test
 #define USE_GYRO_SPI_MPU6500
 #define GYRO_MPU6500_ALIGN      CW180_DEG
 
 #define USE_GYRO_SPI_ICM20689
 #define GYRO_ICM20689_ALIGN     CW90_DEG
 
+<<<<<<< HEAD
 #define ACC
+=======
+#define USE_ACC
+>>>>>>> test
 #define USE_ACC_SPI_MPU6500
 #define ACC_MPU6500_ALIGN       CW180_DEG
 
@@ -68,14 +76,24 @@
 #define I2C1_SDA                PB7        // SDA pad
 #define BARO_I2C_INSTANCE       (I2CDEV_1)
 
+<<<<<<< HEAD
 #define BARO
+=======
+#define USE_BARO
+>>>>>>> test
 #define USE_BARO_BMP280
 #define USE_BARO_MS5611
 #define USE_BARO_BMP085
 
+<<<<<<< HEAD
 //*********** Magnetometer / Compass ************* 
 #define MAG
 #define USE_MAG_HMC5883 
+=======
+//*********** Magnetometer / Compass *************
+#define USE_MAG
+#define USE_MAG_HMC5883
+>>>>>>> test
 
 // *************** SD Card **************************
 #define USE_SDCARD
@@ -95,12 +113,7 @@
 #define SDCARD_SPI_FULL_SPEED_CLOCK_DIVIDER     4 // 21MHz
 
 #define SDCARD_DMA_STREAM_TX_FULL           DMA1_Stream7
-#define SDCARD_DMA_TX                       DMA1
-#define SDCARD_DMA_STREAM_TX                7
-#define SDCARD_DMA_CLK                      LL_AHB1_GRP1_PERIPH_DMA1
-
-#define SDCARD_DMA_CHANNEL_TX_COMPLETE_FLAG DMA_FLAG_TCIF7
-#define SDCARD_DMA_CHANNEL                  DMA_CHANNEL_0
+#define SDCARD_DMA_CHANNEL                  0
 
 // *************** OSD *****************************
 #define USE_SPI_DEVICE_2
@@ -108,7 +121,6 @@
 #define SPI2_MISO_PIN           PB14
 #define SPI2_MOSI_PIN           PB15
 
-#define OSD
 #define USE_MAX7456
 #define MAX7456_SPI_INSTANCE    SPI2
 #define MAX7456_SPI_CS_PIN      PB10
@@ -157,8 +169,11 @@
 #define DEFAULT_CURRENT_METER_SOURCE CURRENT_METER_ADC
 #define CURRENT_METER_SCALE_DEFAULT 179
 
+<<<<<<< HEAD
 #define LED_STRIP
 
+=======
+>>>>>>> test
 #define USE_ESCSERIAL
 #define USE_SERIAL_4WAY_BLHELI_INTERFACE
 

@@ -29,13 +29,15 @@ uint16_t flightModeFlags = 0;
 
 static uint32_t enabledSensors = 0;
 
-#if defined(OSD) || !defined(MINIMAL_CLI)
 const char *armingDisableFlagNames[]= {
     "NOGYRO", "FAILSAFE", "RXLOSS", "BADRX", "BOXFAILSAFE",
     "THROTTLE", "ANGLE", "BOOTGRACE", "NOPREARM", "LOAD",
+<<<<<<< HEAD
     "CALIB", "CLI", "CMS", "OSD", "BST", "ARMSWITCH"
+=======
+    "CALIB", "CLI", "CMS", "OSD", "BST", "MSP", "RUNAWAY", "ARMSWITCH"
+>>>>>>> test
 };
-#endif
 
 static armingDisableFlags_e armingDisableFlags = 0;
 

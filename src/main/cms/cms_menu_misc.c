@@ -22,7 +22,7 @@
 
 #include "platform.h"
 
-#ifdef CMS
+#ifdef USE_CMS
 
 #include "build/debug.h"
 #include "build/version.h"
@@ -36,8 +36,8 @@
 #include "common/utils.h"
 
 #include "config/feature.h"
-#include "config/parameter_group.h"
-#include "config/parameter_group_ids.h"
+#include "pg/pg.h"
+#include "pg/pg_ids.h"
 
 #include "fc/config.h"
 #include "fc/rc_controls.h"
@@ -82,11 +82,12 @@ static OSD_Entry cmsx_menuRcEntries[] =
 };
 
 CMS_Menu cmsx_menuRcPreview = {
+#ifdef CMS_MENU_DEBUG
     .GUARD_text = "XRCPREV",
     .GUARD_type = OME_MENU,
+#endif
     .onEnter = NULL,
     .onExit = cmsx_menuRcConfirmBack,
-    .onGlobalExit = NULL,
     .entries = cmsx_menuRcEntries
 };
 
@@ -136,11 +137,12 @@ static OSD_Entry menuMiscEntries[]=
 };
 
 CMS_Menu cmsx_menuMisc = {
+#ifdef CMS_MENU_DEBUG
     .GUARD_text = "XMISC",
     .GUARD_type = OME_MENU,
+#endif
     .onEnter = cmsx_menuMiscOnEnter,
     .onExit = cmsx_menuMiscOnExit,
-    .onGlobalExit = NULL,
     .entries = menuMiscEntries
 };
 

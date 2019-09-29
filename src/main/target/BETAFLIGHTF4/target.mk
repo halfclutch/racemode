@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> test
 F405_TARGETS   += $(TARGET)
 FEATURES       += VCP ONBOARDFLASH
 

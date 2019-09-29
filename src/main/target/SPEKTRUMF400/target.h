@@ -45,12 +45,20 @@
 //#define M25P16_CS_PIN           PB12
 //#define M25P16_SPI_INSTANCE     SPI2
 
+<<<<<<< HEAD
 #define GYRO
+=======
+#define USE_GYRO
+>>>>>>> test
 #define USE_GYRO_SPI_MPU6500
 #define USE_GYRO_SPI_MPU9250
 #define GYRO_MPU9250_ALIGN CW270_DEG
 
+<<<<<<< HEAD
 #define ACC
+=======
+#define USE_ACC
+>>>>>>> test
 #define USE_ACC_SPI_MPU6500
 #define USE_ACC_SPI_MPU9250
 #define ACC_MPU9250_ALIGN CW270_DEG

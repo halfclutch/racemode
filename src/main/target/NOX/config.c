@@ -20,7 +20,11 @@
 
 #include <platform.h>
 
+<<<<<<< HEAD
 #ifdef TARGET_CONFIG
+=======
+#ifdef USE_TARGET_CONFIG
+>>>>>>> test
 
 #include "io/serial.h"
 

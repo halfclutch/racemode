@@ -50,14 +50,18 @@ typedef enum {
     ARMING_DISABLED_CMS_MENU        = (1 << 12),
     ARMING_DISABLED_OSD_MENU        = (1 << 13),
     ARMING_DISABLED_BST             = (1 << 14),
+<<<<<<< HEAD
     ARMING_DISABLED_ARM_SWITCH      = (1 << 15), // Needs to be the last element, since it's always activated if one of the others is active when arming
+=======
+    ARMING_DISABLED_MSP             = (1 << 15),
+    ARMING_DISABLED_RUNAWAY_TAKEOFF = (1 << 16),
+    ARMING_DISABLED_ARM_SWITCH      = (1 << 17), // Needs to be the last element, since it's always activated if one of the others is active when arming
+>>>>>>> test
 } armingDisableFlags_e;
 
-#define NUM_ARMING_DISABLE_FLAGS 16
+#define ARMING_DISABLE_FLAGS_COUNT 18
 
-#if defined(OSD) || !defined(MINIMAL_CLI)
-extern const char *armingDisableFlagNames[NUM_ARMING_DISABLE_FLAGS];
-#endif
+extern const char *armingDisableFlagNames[ARMING_DISABLE_FLAGS_COUNT];
 
 void setArmingDisabled(armingDisableFlags_e flag);
 void unsetArmingDisabled(armingDisableFlags_e flag);
@@ -74,7 +78,7 @@ typedef enum {
     HEADFREE_MODE   = (1 << 6),
     UNUSED_MODE     = (1 << 7), // old autotune
     PASSTHRU_MODE   = (1 << 8),
-    SONAR_MODE      = (1 << 9),
+    RANGEFINDER_MODE= (1 << 9),
     FAILSAFE_MODE   = (1 << 10)
 } flightModeFlags_e;
 
@@ -89,7 +93,7 @@ extern uint16_t flightModeFlags;
 // It is much more memory efficient than full map (uint32_t -> uint8_t)
 #define FLIGHT_MODE_BOXID_MAP_INITIALIZER {                             \
         BOXANGLE, BOXHORIZON, BOXMAG, BOXBARO, BOXGPSHOME, BOXGPSHOLD,  \
-        BOXHEADFREE, -1, BOXPASSTHRU, BOXSONAR, BOXFAILSAFE}  \
+        BOXHEADFREE, -1, BOXPASSTHRU, BOXRANGEFINDER, BOXFAILSAFE}  \
         /**/
 
 typedef enum {

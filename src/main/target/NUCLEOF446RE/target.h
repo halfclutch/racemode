@@ -15,7 +15,11 @@
 
 #pragma once
 
+<<<<<<< HEAD
 #define TARGET_CONFIG
+=======
+#define USE_TARGET_CONFIG
+>>>>>>> test
 
 #define TARGET_BOARD_IDENTIFIER "N446" // STM32 Nucleo F446RE
 #define USBD_PRODUCT_STRING     "NucleoF446RE"
@@ -35,12 +39,20 @@
 #define SPI2_MISO_PIN PB14
 #define SPI2_MOSI_PIN PB15
 
+<<<<<<< HEAD
 #define GYRO
+=======
+#define USE_GYRO
+>>>>>>> test
 #define USE_FAKE_GYRO
 #define USE_GYRO_SPI_MPU6500
 #define USE_GYRO_SPI_MPU9250
 
+<<<<<<< HEAD
 #define ACC
+=======
+#define USE_ACC
+>>>>>>> test
 #define USE_FAKE_ACC
 #define USE_ACC_SPI_MPU6500
 #define USE_ACC_SPI_MPU9250
@@ -57,18 +69,29 @@
 //#define USE_MPU_DATA_READY_SIGNAL
 //#define ENSURE_MPU_DATA_READY_IS_LOW
 
+<<<<<<< HEAD
 #define BARO
+=======
+#define USE_BARO
+>>>>>>> test
 #define USE_FAKE_BARO
 //#define USE_BARO_BMP085
 //#define USE_BARO_BMP280
 //#define USE_BARO_MS5611
 
+<<<<<<< HEAD
 //#define OSD
+=======
+>>>>>>> test
 //#define USE_MAX7456
 //#define MAX7456_SPI_INSTANCE    SPI2
 //#define MAX7456_SPI_CS_PIN      SPI2_NSS_PIN
 
+<<<<<<< HEAD
 #define CMS
+=======
+#define USE_CMS
+>>>>>>> test
 
 //#define USE_SDCARD
 //
@@ -81,17 +104,49 @@
 //
 //// Note, this is the same DMA channel as UART1_RX. Luckily we don't use DMA for USART Rx.
 //#define SDCARD_DMA_CHANNEL_TX               DMA1_Channel5
+<<<<<<< HEAD
 //#define SDCARD_DMA_CHANNEL_TX_COMPLETE_FLAG DMA1_FLAG_TC5
+=======
+>>>>>>> test
 
 // Performance logging for SD card operations:
 // #define AFATFS_USE_INTROSPECTIVE_LOGGING
 
+<<<<<<< HEAD
 #define MAG
+=======
+#define USE_MAG
+>>>>>>> test
 #define USE_FAKE_MAG
 //#define USE_MAG_AK8963
 //#define USE_MAG_AK8975
 //#define USE_MAG_HMC5883
 
+<<<<<<< HEAD
+=======
+#define USE_RX_SPI
+#define RX_SPI_INSTANCE         SPI1
+// Nordic Semiconductor uses 'CSN', STM uses 'NSS'
+#define RX_CE_PIN               PC7 // D9
+#define RX_NSS_PIN              PB6 // D10
+#define RX_SCK_PIN              PA5 // D13
+#define RX_MISO_PIN             PA6 // D12
+#define RX_MOSI_PIN             PA7 // D11
+// NUCLEO has NSS on PB6, rather than the standard PA4
+#define SPI1_NSS_PIN            RX_NSS_PIN
+#define SPI1_SCK_PIN            RX_SCK_PIN
+#define SPI1_MISO_PIN           RX_MISO_PIN
+#define SPI1_MOSI_PIN           RX_MOSI_PIN
+
+#define USE_RX_NRF24
+#define USE_RX_CX10
+#define USE_RX_H8_3D
+#define USE_RX_INAV
+#define USE_RX_SYMA
+#define USE_RX_V202
+#define RX_SPI_DEFAULT_PROTOCOL RX_SPI_NRF24_H8_3D
+
+>>>>>>> test
 #define USE_VCP
 
 #define USE_UART1
@@ -131,6 +186,10 @@
 
 #define USE_ADC
 #define ADC_INSTANCE            ADC1
+<<<<<<< HEAD
+=======
+//#define ADC_INSTANCE            ADC2
+>>>>>>> test
 #define VBAT_ADC_PIN            PC0
 #define CURRENT_METER_ADC_PIN   PC1
 #define RSSI_ADC_PIN            PC2
@@ -138,7 +197,11 @@
 
 #define USE_ESC_SENSOR
 
+<<<<<<< HEAD
 #define SONAR
+=======
+#define USE_SONAR
+>>>>>>> test
 #define SONAR_TRIGGER_PIN       PB0
 #define SONAR_ECHO_PIN          PB1
 

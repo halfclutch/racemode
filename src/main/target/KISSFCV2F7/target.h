@@ -17,7 +17,11 @@
 
 #pragma once
 
+<<<<<<< HEAD
 #define TARGET_CONFIG
+=======
+#define USE_TARGET_CONFIG
+>>>>>>> test
 
 #define TARGET_BOARD_IDENTIFIER "KISSV2"
 
@@ -35,11 +39,19 @@
 #define MPU6000_CS_PIN          PB12
 #define MPU6000_SPI_INSTANCE    SPI2
 
+<<<<<<< HEAD
 #define GYRO
 #define USE_GYRO_SPI_MPU6000
 #define GYRO_MPU6000_ALIGN      CW90_DEG
 
 #define ACC
+=======
+#define USE_GYRO
+#define USE_GYRO_SPI_MPU6000
+#define GYRO_MPU6000_ALIGN      CW90_DEG
+
+#define USE_ACC
+>>>>>>> test
 #define USE_ACC_SPI_MPU6000
 #define ACC_MPU6000_ALIGN       CW90_DEG
 
@@ -89,8 +101,11 @@
 
 #define SERIAL_PORT_COUNT       6
 
+<<<<<<< HEAD
 #define LED_STRIP
 
+=======
+>>>>>>> test
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
 #define SERIALRX_PROVIDER       SERIALRX_SBUS
 #define SERIALRX_UART           SERIAL_PORT_USART2
