@@ -67,6 +67,11 @@ typedef enum {
 #ifdef USE_MAX7456
     TABLE_MAX7456_CLOCK,
 #endif
+<<<<<<< HEAD:src/main/fc/settings.h
+#ifdef USE_GYRO_OVERFLOW_CHECK
+    TABLE_GYRO_OVERFLOW_CHECK,
+#endif
+=======
 #ifdef USE_RANGEFINDER
     TABLE_RANGEFINDER_HARDWARE,
 #endif
@@ -74,6 +79,7 @@ typedef enum {
     TABLE_GYRO_OVERFLOW_CHECK,
 #endif
     TABLE_RATES_TYPE,
+>>>>>>> test:src/main/interface/settings.h
     LOOKUP_TABLE_COUNT
 } lookupTableIndex_e;
 

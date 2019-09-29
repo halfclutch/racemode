@@ -70,6 +70,11 @@
 #define USE_I2C_DEVICE_2
 #define I2C_DEVICE              (I2CDEV_2)
 
+<<<<<<< HEAD
+#define SPEKTRUM_BIND
+
+=======
+>>>>>>> test
 #define BRUSHED_MOTORS
 #define DEFAULT_FEATURES        FEATURE_MOTOR_STOP
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL

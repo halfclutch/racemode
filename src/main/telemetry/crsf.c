@@ -23,6 +23,10 @@
 
 #ifdef USE_TELEMETRY
 
+<<<<<<< HEAD
+#include "config/feature.h"
+=======
+>>>>>>> test
 #include "build/atomic.h"
 #include "build/build_config.h"
 #include "build/version.h"
@@ -38,6 +42,14 @@
 #include "common/utils.h"
 
 #include "drivers/nvic.h"
+<<<<<<< HEAD
+
+#include "sensors/battery.h"
+
+#include "io/gps.h"
+#include "io/serial.h"
+=======
+>>>>>>> test
 
 #include "fc/config.h"
 #include "fc/rc_modes.h"
@@ -59,6 +71,11 @@
 #include "telemetry/crsf.h"
 #include "telemetry/msp_shared.h"
 
+<<<<<<< HEAD
+#include "fc/config.h"
+#include "sensors/sensors.h"
+=======
+>>>>>>> test
 
 #define CRSF_CYCLETIME_US                   100000 // 100ms, 10 Hz
 #define CRSF_DEVICEINFO_VERSION             0x01
@@ -80,6 +97,51 @@ typedef struct mspBuffer_s {
 static mspBuffer_t mspRxBuffer;
 
 void initCrsfMspBuffer(void)
+<<<<<<< HEAD
+{
+    mspRxBuffer.len = 0;
+}
+
+bool bufferCrsfMspFrame(uint8_t *frameStart, int frameLength)
+{
+    if (mspRxBuffer.len + CRSF_MSP_LENGTH_OFFSET + frameLength > CRSF_MSP_BUFFER_SIZE) {
+        return false;
+    } else {
+        uint8_t *p = mspRxBuffer.bytes + mspRxBuffer.len;
+        *p++ = frameLength;
+        memcpy(p, frameStart, frameLength);
+        mspRxBuffer.len += CRSF_MSP_LENGTH_OFFSET + frameLength;
+        return true;
+    }
+}
+
+bool handleCrsfMspFrameBuffer(uint8_t payloadSize, mspResponseFnPtr responseFn)
+{
+    bool requestHandled = false;
+    if (!mspRxBuffer.len) {
+        return false;
+    }
+    int pos = 0;
+    while (true) {
+        const int mspFrameLength = mspRxBuffer.bytes[pos];
+        if (handleMspFrame(&mspRxBuffer.bytes[CRSF_MSP_LENGTH_OFFSET + pos], mspFrameLength)) {
+            requestHandled |= sendMspReply(payloadSize, responseFn);
+        }
+        pos += CRSF_MSP_LENGTH_OFFSET + mspFrameLength;
+        ATOMIC_BLOCK(NVIC_PRIO_SERIALUART1) {
+            if (pos >= mspRxBuffer.len) {
+                mspRxBuffer.len = 0;
+                return requestHandled;
+            }
+        }
+    }
+    return requestHandled;
+}
+#endif
+
+static void crsfInitializeFrame(sbuf_t *dst)
+=======
+>>>>>>> test
 {
     mspRxBuffer.len = 0;
 }
@@ -339,7 +401,11 @@ void crsfSendMspResponse(uint8_t *payload)
     sbufWriteU8(dst, CRSF_FRAME_TX_MSP_FRAME_SIZE + CRSF_FRAME_LENGTH_EXT_TYPE_CRC);
     sbufWriteU8(dst, CRSF_FRAMETYPE_MSP_RESP);
     sbufWriteU8(dst, CRSF_ADDRESS_RADIO_TRANSMITTER);
+<<<<<<< HEAD
+    sbufWriteU8(dst, CRSF_ADDRESS_BETAFLIGHT);
+=======
     sbufWriteU8(dst, CRSF_ADDRESS_FLIGHT_CONTROLLER);
+>>>>>>> test
     sbufWriteData(dst, payload, CRSF_FRAME_TX_MSP_FRAME_SIZE);
     crsfFinalize(dst);
 }
@@ -399,7 +465,11 @@ void initCrsfTelemetry(void)
     if (sensors(SENSOR_ACC)) {
         crsfSchedule[index++] = BV(CRSF_FRAME_ATTITUDE_INDEX);
     }
+<<<<<<< HEAD
+    if (batteryConfig()->voltageMeterSource != VOLTAGE_METER_NONE || batteryConfig()->currentMeterSource != CURRENT_METER_NONE) {
+=======
     if (isBatteryVoltageAvailable() || isAmperageAvailable()) {
+>>>>>>> test
         crsfSchedule[index++] = BV(CRSF_FRAME_BATTERY_SENSOR_INDEX);
     }
     crsfSchedule[index++] = BV(CRSF_FRAME_FLIGHT_MODE_INDEX);

@@ -215,6 +215,10 @@ gyroOverflow_e mpuGyroCheckOverflow(const struct gyroDev_s *gyro);
 bool mpuGyroRead(struct gyroDev_s *gyro);
 bool mpuGyroReadSPI(struct gyroDev_s *gyro);
 void mpuDetect(struct gyroDev_s *gyro);
+<<<<<<< HEAD
+void mpuGyroSetIsrUpdate(struct gyroDev_s *gyro, sensorGyroUpdateFuncPtr updateFn);
+=======
+>>>>>>> test
 
 struct accDev_s;
 bool mpuAccRead(struct accDev_s *acc);

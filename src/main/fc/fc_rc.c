@@ -240,6 +240,9 @@ void processRcCommand(void)
 
     if (isRXDataNew || updatedChannel) {
         const uint8_t maxUpdatedAxis = isRXDataNew ? FD_YAW : MIN(updatedChannel, FD_YAW); // throttle channel doesn't require rate calculation
+<<<<<<< HEAD
+        for (int axis = FD_ROLL; axis <= maxUpdatedAxis; axis++) {
+=======
 #if defined(SITL)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunsafe-loop-optimizations"
@@ -248,6 +251,7 @@ void processRcCommand(void)
 #if defined(SITL)
 #pragma GCC diagnostic pop
 #endif
+>>>>>>> test
             calculateSetpointRate(axis);
         }
 

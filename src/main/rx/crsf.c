@@ -175,10 +175,15 @@ STATIC_UNIT_TESTED void crsfDataReceive(uint16_t c, void *data)
     }
 }
 
+<<<<<<< HEAD
+STATIC_UNIT_TESTED uint8_t crsfFrameStatus(void)
+{
+=======
 STATIC_UNIT_TESTED uint8_t crsfFrameStatus(rxRuntimeConfig_t *rxRuntimeConfig)
 {
     UNUSED(rxRuntimeConfig);
 
+>>>>>>> test
     if (crsfFrameDone) {
         crsfFrameDone = false;
         if (crsfFrame.frame.type == CRSF_FRAMETYPE_RC_CHANNELS_PACKED) {
@@ -264,7 +269,11 @@ bool crsfRxInit(const rxConfig_t *rxConfig, rxRuntimeConfig_t *rxRuntimeConfig)
         NULL,
         CRSF_BAUDRATE,
         CRSF_PORT_MODE,
+<<<<<<< HEAD
+        CRSF_PORT_OPTIONS
+=======
         CRSF_PORT_OPTIONS | (rxConfig->serialrx_inverted ? SERIAL_INVERTED : 0)
+>>>>>>> test
         );
 
     return serialPort != NULL;

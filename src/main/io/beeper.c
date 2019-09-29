@@ -390,7 +390,11 @@ void beeperUpdate(timeUs_t currentTimeUs)
         beeperIsOn = 1;
 
 #ifdef USE_DSHOT
+<<<<<<< HEAD
+        if (!areMotorsRunning() && beeperConfig()->dshotBeaconTone && (beeperConfig()->dshotBeaconTone <= DSHOT_CMD_BEACON5) && (currentBeeperEntry->mode == BEEPER_RX_SET)) {
+=======
         if (!areMotorsRunning() && beeperConfig()->dshotBeaconTone && (beeperConfig()->dshotBeaconTone <= DSHOT_CMD_BEACON5) && (currentBeeperEntry->mode == BEEPER_RX_SET || currentBeeperEntry->mode == BEEPER_RX_LOST)) {
+>>>>>>> test
             pwmDisableMotors();
             delay(1);
 

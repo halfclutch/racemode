@@ -81,12 +81,21 @@ FAST_RAM gyro_t gyro;
 static FAST_RAM uint8_t gyroDebugMode;
 
 #ifdef USE_GYRO_OVERFLOW_CHECK
+<<<<<<< HEAD
+static uint8_t overflowAxisMask;
+#endif
+static float accumulatedMeasurements[XYZ_AXIS_COUNT];
+static float gyroPrevious[XYZ_AXIS_COUNT];
+static timeUs_t accumulatedMeasurementTimeUs;
+static timeUs_t accumulationLastTimeSampledUs;
+=======
 static FAST_RAM uint8_t overflowAxisMask;
 #endif
 static FAST_RAM float accumulatedMeasurements[XYZ_AXIS_COUNT];
 static FAST_RAM float gyroPrevious[XYZ_AXIS_COUNT];
 static FAST_RAM timeUs_t accumulatedMeasurementTimeUs;
 static FAST_RAM timeUs_t accumulationLastTimeSampledUs;
+>>>>>>> test
 
 typedef struct gyroCalibration_s {
     int32_t sum[XYZ_AXIS_COUNT];
@@ -118,6 +127,8 @@ typedef struct gyroSensor_s {
     biquadFilter_t notchFilterDyn[XYZ_AXIS_COUNT];
     timeUs_t overflowTimeUs;
     bool overflowDetected;
+<<<<<<< HEAD
+=======
 #if defined(USE_GYRO_FAST_KALMAN)
     // gyro kalman filter
     filterApplyFnPtr fastKalmanApplyFn;
@@ -127,6 +138,7 @@ typedef struct gyroSensor_s {
     filterApplyFnPtr biquadRCFIR2ApplyFn;
     biquadFilter_t biquadRCFIR2[XYZ_AXIS_COUNT];
 #endif
+>>>>>>> test
 } gyroSensor_t;
 
 STATIC_UNIT_TESTED FAST_RAM gyroSensor_t gyroSensor1;
@@ -153,6 +165,16 @@ static void gyroInitSensorFilters(gyroSensor_t *gyroSensor);
 #define GYRO_SYNC_DENOM_DEFAULT 4
 #endif
 
+#if (defined(USE_GYRO_SPI_MPU6500) \
+  || defined(USE_GYRO_SPI_MPU9250) \
+  || defined(USE_GYRO_SPI_ICM20601) \
+  || defined(USE_GYRO_SPI_ICM20649) \
+  || defined(USE_GYRO_SPI_ICM20689))
+#define GYRO_CHECK_OVERFLOW_DEFAULT  true
+#else
+#define GYRO_CHECK_OVERFLOW_DEFAULT  false
+#endif
+
 PG_REGISTER_WITH_RESET_TEMPLATE(gyroConfig_t, gyroConfig, PG_GYRO_CONFIG, 1);
 
 PG_RESET_TEMPLATE(gyroConfig_t, gyroConfig,
@@ -169,11 +191,15 @@ PG_RESET_TEMPLATE(gyroConfig_t, gyroConfig,
     .gyro_soft_notch_cutoff_1 = 300,
     .gyro_soft_notch_hz_2 = 200,
     .gyro_soft_notch_cutoff_2 = 100,
+<<<<<<< HEAD
+    .checkOverflow = GYRO_OVERFLOW_CHECK_ALL_AXES
+=======
     .checkOverflow = GYRO_OVERFLOW_CHECK_ALL_AXES,
     .gyro_filter_q = 0,
     .gyro_filter_r = 0,
     .gyro_filter_p = 0,
     .gyro_offset_yaw = 0,
+>>>>>>> test
 );
 
 
@@ -719,6 +745,11 @@ FAST_CODE int32_t gyroSlewLimiter(gyroSensor_t *gyroSensor, int axis)
 }
 #endif
 
+<<<<<<< HEAD
+// Fix to make F1 fit into flash in 3.2
+#if (FLASH_SIZE > 128)
+=======
+>>>>>>> test
 static void checkForOverflow(gyroSensor_t *gyroSensor, timeUs_t currentTimeUs)
 {
 #ifdef USE_GYRO_OVERFLOW_CHECK
@@ -727,9 +758,15 @@ static void checkForOverflow(gyroSensor_t *gyroSensor, timeUs_t currentTimeUs)
     // This can cause an overflow and sign reversal in the output.
     // Overflow and sign reversal seems to result in a gyro value of +1996 or -1996.
     if (gyroSensor->overflowDetected) {
+<<<<<<< HEAD
+        const float gyroRateX = (float)gyroSensor->gyroDev.gyroADC[X] * gyroSensor->gyroDev.scale;
+        const float gyroRateY = (float)gyroSensor->gyroDev.gyroADC[Y] * gyroSensor->gyroDev.scale;
+        const float gyroRateZ = (float)gyroSensor->gyroDev.gyroADC[Z] * gyroSensor->gyroDev.scale;
+=======
         const float gyroRateX = gyroSensor->gyroDev.gyroADC[X] * gyroSensor->gyroDev.scale;
         const float gyroRateY = gyroSensor->gyroDev.gyroADC[Y] * gyroSensor->gyroDev.scale;
         const float gyroRateZ = gyroSensor->gyroDev.gyroADC[Z] * gyroSensor->gyroDev.scale;
+>>>>>>> test
         static const int overflowResetThreshold = 1800;
         if (abs(gyroRateX) < overflowResetThreshold
               && abs(gyroRateY) < overflowResetThreshold
@@ -756,8 +793,14 @@ static void checkForOverflow(gyroSensor_t *gyroSensor, timeUs_t currentTimeUs)
     UNUSED(currentTimeUs);
 #endif // USE_GYRO_OVERFLOW_CHECK
 }
+<<<<<<< HEAD
+#endif // (FLASH_SIZE > 128)
+
+void gyroUpdateSensor(gyroSensor_t *gyroSensor, timeUs_t currentTimeUs)
+=======
 
 static FAST_CODE void gyroUpdateSensor(gyroSensor_t *gyroSensor, timeUs_t currentTimeUs)
+>>>>>>> test
 {
     if (!gyroSensor->gyroDev.readFn(&gyroSensor->gyroDev)) {
         return;
@@ -798,9 +841,18 @@ static FAST_CODE void gyroUpdateSensor(gyroSensor_t *gyroSensor, timeUs_t curren
     accumulationLastTimeSampledUs = currentTimeUs;
     accumulatedMeasurementTimeUs += sampleDeltaUs;
 
+<<<<<<< HEAD
+// Fix to make F1 fit into flash in 3.2
+#if (FLASH_SIZE > 128)
     if (gyroConfig()->checkOverflow) {
         checkForOverflow(gyroSensor, currentTimeUs);
     }
+#endif
+=======
+    if (gyroConfig()->checkOverflow) {
+        checkForOverflow(gyroSensor, currentTimeUs);
+    }
+>>>>>>> test
     if (gyroDebugMode == DEBUG_NONE) {
         for (int axis = 0; axis < XYZ_AXIS_COUNT; axis++) {
             // NOTE: this branch optimized for when there is no gyro debugging, ensure it is kept in step with non-optimized branch
@@ -817,7 +869,18 @@ static FAST_CODE void gyroUpdateSensor(gyroSensor_t *gyroSensor, timeUs_t curren
             gyroADCf = gyroSensor->notchFilter2ApplyFn((filter_t *)&gyroSensor->notchFilter2[axis], gyroADCf);
             gyroADCf = gyroSensor->softLpfFilterApplyFn(gyroSensor->softLpfFilterPtr[axis], gyroADCf);
             gyro.gyroADCf[axis] = gyroADCf;
+<<<<<<< HEAD
+            if (
+// Fix to make F1 fit into flash in 3.2
+#if (FLASH_SIZE <= 128)
+                true
+#else
+                !gyroSensor->overflowDetected
+#endif
+                ) {
+=======
             if (!gyroSensor->overflowDetected) {
+>>>>>>> test
                 // integrate using trapezium rule to avoid bias
                 accumulatedMeasurements[axis] += 0.5f * (gyroPrevious[axis] + gyroADCf) * sampleDeltaUs;
                 gyroPrevious[axis] = gyroADCf;
@@ -861,7 +924,18 @@ static FAST_CODE void gyroUpdateSensor(gyroSensor_t *gyroSensor, timeUs_t curren
             gyroADCf = gyroSensor->softLpfFilterApplyFn(gyroSensor->softLpfFilterPtr[axis], gyroADCf);
 
             gyro.gyroADCf[axis] = gyroADCf;
+<<<<<<< HEAD
+            if (
+// Fix to make F1 fit into flash in 3.2
+#if (FLASH_SIZE <= 128)
+                true
+#else
+                !gyroSensor->overflowDetected
+#endif
+                ) {
+=======
             if (!gyroSensor->overflowDetected) {
+>>>>>>> test
                 // integrate using trapezium rule to avoid bias
                 accumulatedMeasurements[axis] += 0.5f * (gyroPrevious[axis] + gyroADCf) * sampleDeltaUs;
                 gyroPrevious[axis] = gyroADCf;
@@ -870,6 +944,11 @@ static FAST_CODE void gyroUpdateSensor(gyroSensor_t *gyroSensor, timeUs_t curren
     }
 }
 
+<<<<<<< HEAD
+void gyroUpdate(timeUs_t currentTimeUs)
+{
+    gyroUpdateSensor(&gyroSensor1, currentTimeUs);
+=======
 FAST_CODE void gyroUpdate(timeUs_t currentTimeUs)
 {
     gyroUpdateSensor(&gyroSensor1, currentTimeUs);
@@ -891,6 +970,7 @@ bool gyroGetAccumulationAverage(float *accumulationAverage)
         }
         return false;
     }
+>>>>>>> test
 }
 
 void gyroReadTemperature(void)
@@ -912,5 +992,14 @@ int16_t gyroRateDps(int axis)
 
 bool gyroOverflowDetected(void)
 {
+<<<<<<< HEAD
+// Fix to make F1 fit into flash in 3.2
+#if (FLASH_SIZE > 128)
     return gyroSensor1.overflowDetected;
+#else
+    return false;
+#endif
+=======
+    return gyroSensor1.overflowDetected;
+>>>>>>> test
 }

@@ -35,9 +35,15 @@
 //  MPU 6000
 #define MPU6000_CS_PIN            PA4
 #define MPU6000_SPI_INSTANCE      SPI1
+<<<<<<< HEAD
+#define ACC
+#define USE_ACC_SPI_MPU6000
+#define GYRO
+=======
 #define USE_ACC
 #define USE_ACC_SPI_MPU6000
 #define USE_GYRO
+>>>>>>> test
 #define USE_GYRO_SPI_MPU6000
 #define GYRO_MPU6000_ALIGN       CW0_DEG
 #define ACC_MPU6000_ALIGN        CW0_DEG
@@ -49,6 +55,10 @@
 #define SPI2_MISO_PIN           PB14
 #define SPI2_MOSI_PIN           PB15
 
+<<<<<<< HEAD
+#define OSD
+=======
+>>>>>>> test
 #define USE_MAX7456
 #define MAX7456_SPI_INSTANCE    SPI2
 #define MAX7456_SPI_CS_PIN      PB12
@@ -98,7 +108,11 @@
 #define VBAT_ADC_PIN            PC2
 #define DEFAULT_VOLTAGE_METER_SOURCE VOLTAGE_METER_ADC
 #define DEFAULT_CURRENT_METER_SOURCE CURRENT_METER_NONE
+<<<<<<< HEAD
+#define TRANSPONDER
+=======
 #define USE_TRANSPONDER
+>>>>>>> test
 
 // DEFINE DEFAULT FEATURE
 #define DEFAULT_RX_FEATURE          FEATURE_RX_SERIAL

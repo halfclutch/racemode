@@ -285,7 +285,11 @@ void gpsInit(void)
 #endif
 
     // no callback - buffer will be consumed in gpsUpdate()
+<<<<<<< HEAD
+    gpsPort = openSerialPort(gpsPortConfig->identifier, FUNCTION_GPS, NULL, baudRates[gpsInitData[gpsData.baudrateIndex].baudrateIndex], mode, SERIAL_NOT_INVERTED);
+=======
     gpsPort = openSerialPort(gpsPortConfig->identifier, FUNCTION_GPS, NULL, NULL, baudRates[gpsInitData[gpsData.baudrateIndex].baudrateIndex], mode, SERIAL_NOT_INVERTED);
+>>>>>>> test
     if (!gpsPort) {
         featureClear(FEATURE_GPS);
         return;

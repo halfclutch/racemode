@@ -238,6 +238,10 @@ void updateArmingStatus(void)
           /* Ignore ARMING_DISABLED_THROTTLE (once arm switch is on) if we are in 3D mode */
           bool ignoreThrottle = feature(FEATURE_3D)
                              && !IS_RC_MODE_ACTIVE(BOX3DDISABLE)
+<<<<<<< HEAD
+                             && !(getArmingDisableFlags() & ~(ARMING_DISABLED_ARM_SWITCH | ARMING_DISABLED_THROTTLE));
+
+=======
                              && !isModeActivationConditionPresent(BOX3DONASWITCH)
                              && !(getArmingDisableFlags() & ~(ARMING_DISABLED_ARM_SWITCH | ARMING_DISABLED_THROTTLE));
 
@@ -247,6 +251,7 @@ void updateArmingStatus(void)
            }
 #endif
 
+>>>>>>> test
           // If arming is disabled and the ARM switch is on
           if (isArmingDisabled()
               && !ignoreGyro
@@ -915,10 +920,19 @@ void taskMainPidLoop(timeUs_t currentTimeUs)
     // DEBUG_PIDLOOP, timings for:
     // 0 - gyroUpdate()
     // 1 - pidController()
+<<<<<<< HEAD
+    // 2 - subTaskMainSubprocesses()
+    // 3 - subTaskMotorUpdate()
+    uint32_t startTime = 0;
+    if (debugMode == DEBUG_PIDLOOP) {startTime = micros();}
+    gyroUpdate(currentTimeUs);
+    DEBUG_SET(DEBUG_PIDLOOP, 0, micros() - startTime);
+=======
     // 2 - subTaskMotorUpdate()
     // 3 - subTaskMainSubprocesses()
     gyroUpdate(currentTimeUs);
     DEBUG_SET(DEBUG_PIDLOOP, 0, micros() - currentTimeUs);
+>>>>>>> test
 
     if (pidUpdateCountdown) {
         pidUpdateCountdown--;

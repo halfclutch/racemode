@@ -107,7 +107,11 @@ bool areSticksInApModePosition(uint16_t ap_mode)
 throttleStatus_e calculateThrottleStatus(void)
 {
     if (feature(FEATURE_3D)) {
+<<<<<<< HEAD
+        if (IS_RC_MODE_ACTIVE(BOX3DDISABLE)) {
+=======
         if (IS_RC_MODE_ACTIVE(BOX3DDISABLE) || isModeActivationConditionPresent(BOX3DONASWITCH)) {
+>>>>>>> test
             if (rcData[THROTTLE] < rxConfig()->mincheck) {
                 return THROTTLE_LOW;
             }

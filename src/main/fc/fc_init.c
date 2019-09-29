@@ -335,7 +335,7 @@ void init(void)
     }
 #endif
 
-#if defined(USE_SPEKTRUM_BIND)
+#if defined(SPEKTRUM_BIND)
     if (feature(FEATURE_RX_SERIAL)) {
         switch (rxConfig()->serialrx_provider) {
         case SERIALRX_SPEKTRUM1024:
@@ -400,10 +400,17 @@ void init(void)
         featureClear(FEATURE_3D);
         idlePulse = 0; // brushed motors
     }
+<<<<<<< HEAD
+    /* Motors needs to be initialized soon as posible because hardware initialization 
+     * may send spurious pulses to esc's causing their early initialization. Also ppm
+     * receiver may share timer with motors so motors MUST be initialized here. */
+    motorDevInit(&motorConfig()->dev, idlePulse, getMotorCount()); 
+=======
     /* Motors needs to be initialized soon as posible because hardware initialization
      * may send spurious pulses to esc's causing their early initialization. Also ppm
      * receiver may share timer with motors so motors MUST be initialized here. */
     motorDevInit(&motorConfig()->dev, idlePulse, getMotorCount());
+>>>>>>> test
     systemState |= SYSTEM_STATE_MOTORS_READY;
 
     if (0) {}
@@ -521,7 +528,11 @@ void init(void)
     // so we are ready to call validateAndFixGyroConfig(), pidInit(), and setAccelerationFilter()
     validateAndFixGyroConfig();
     pidInit(currentPidProfile);
+<<<<<<< HEAD
+    setAccelerationFilter(accelerometerConfig()->acc_lpf_hz);
+=======
     accInitFilters();
+>>>>>>> test
 
 #ifdef USE_SERVOS
     servosInit();

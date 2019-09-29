@@ -424,7 +424,11 @@ static bool osdDrawSingleElement(uint8_t item)
 
 #ifdef USE_GPS
     case OSD_GPS_SATS:
+<<<<<<< HEAD
+        tfp_sprintf(buff, "%c%c%d", SYM_SAT_L, SYM_SAT_R, gpsSol.numSat);
+=======
         tfp_sprintf(buff, "%c%c%2d", SYM_SAT_L, SYM_SAT_R, gpsSol.numSat);
+>>>>>>> test
         break;
 
     case OSD_GPS_SPEED:

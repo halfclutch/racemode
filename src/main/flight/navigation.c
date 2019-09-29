@@ -104,6 +104,10 @@ void navigationInit(void)
 //static void GPS_distance(int32_t lat1, int32_t lon1, int32_t lat2, int32_t lon2, uint16_t* dist, int16_t* bearing);
 static void GPS_calc_location_error(int32_t * target_lat, int32_t * target_lng, int32_t * gps_lat, int32_t * gps_lng);
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
 static bool check_missed_wp(void);
 static void GPS_calc_poshold(void);
 static void GPS_calc_nav_rate(uint16_t max_speed);
@@ -138,6 +142,10 @@ typedef struct {
 static PID posholdPID[2];
 static PID poshold_ratePID[2];
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
 static PID_PARAM navPID_PARAM;
 static PID navPID[2];
 
@@ -187,6 +195,10 @@ static void reset_PID(PID *pid)
 
 static int32_t error[2];
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
 // The difference between the desired rate of travel and the actual rate of travel
 // updated after GPS read - 5-10hz
 static int16_t rate_error[2];
@@ -226,6 +238,63 @@ static int32_t nav_bearing;
 
 void navNewGpsData(void)
 {
+<<<<<<< HEAD
+    static uint32_t nav_loopTimer;
+
+    if (!(STATE(GPS_FIX) && gpsSol.numSat >= 5)) {
+        return;
+    }
+
+    if (!ARMING_FLAG(ARMED))
+        DISABLE_STATE(GPS_FIX_HOME);
+
+    if (!STATE(GPS_FIX_HOME) && ARMING_FLAG(ARMED))
+        GPS_reset_home_position();
+
+    // Apply moving average filter to GPS data
+#if defined(GPS_FILTERING)
+    GPS_filter_index = (GPS_filter_index + 1) % GPS_FILTER_VECTOR_LENGTH;
+    for (int axis = 0; axis < 2; axis++) {
+        GPS_read[axis] = axis == LAT ? gpsSol.llh.lat : gpsSol.llh.lon; // latest unfiltered data is in GPS_latitude and GPS_longitude
+        GPS_degree[axis] = GPS_read[axis] / 10000000;   // get the degree to assure the sum fits to the int32_t
+
+        // How close we are to a degree line ? its the first three digits from the fractions of degree
+        // later we use it to Check if we are close to a degree line, if yes, disable averaging,
+        fraction3[axis] = (GPS_read[axis] - GPS_degree[axis] * 10000000) / 10000;
+
+        GPS_filter_sum[axis] -= GPS_filter[axis][GPS_filter_index];
+        GPS_filter[axis][GPS_filter_index] = GPS_read[axis] - (GPS_degree[axis] * 10000000);
+        GPS_filter_sum[axis] += GPS_filter[axis][GPS_filter_index];
+        GPS_filtered[axis] = GPS_filter_sum[axis] / GPS_FILTER_VECTOR_LENGTH + (GPS_degree[axis] * 10000000);
+        if (nav_mode == NAV_MODE_POSHOLD) {             // we use gps averaging only in poshold mode...
+            if (fraction3[axis] > 1 && fraction3[axis] < 999) {
+                if (axis == LAT) {
+                    gpsSol.llh.lat = GPS_filtered[LAT];
+                } else {
+                    gpsSol.llh.lon = GPS_filtered[LON];
+                }
+            }
+        }
+    }
+#endif
+
+    //
+    // Calculate time delta for navigation loop, range 0-1.0f, in seconds
+    //
+    // Time for calculating x,y speed and navigation pids
+    dTnav = (float)(millis() - nav_loopTimer) / 1000.0f;
+    nav_loopTimer = millis();
+    // prevent runup from bad GPS
+    dTnav = MIN(dTnav, 1.0f);
+
+    GPS_calculateDistanceAndDirectionToHome();
+
+    // calculate the current velocity based on gps coordinates continously to get a valid speed at the moment when we start navigating
+    GPS_calc_velocity();
+
+#ifdef NAV
+=======
+>>>>>>> test
     if (FLIGHT_MODE(GPS_HOLD_MODE) || FLIGHT_MODE(GPS_HOME_MODE)) {
         // we are navigating
 
@@ -279,6 +348,10 @@ void GPS_reset_nav(void)
         nav[i] = 0;
         reset_PID(&posholdPID[i]);
         reset_PID(&poshold_ratePID[i]);
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
         reset_PID(&navPID[i]);
     }
 }
@@ -295,6 +368,10 @@ void gpsUsePIDs(pidProfile_t *pidProfile)
     poshold_ratePID_PARAM.kD = (float)pidProfile->pid[PID_POSR].D / 1000.0f;
     poshold_ratePID_PARAM.Imax = POSHOLD_RATE_IMAX * 100;
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
     navPID_PARAM.kP = (float)pidProfile->pid[PID_NAVR].P / 10.0f;
     navPID_PARAM.kI = (float)pidProfile->pid[PID_NAVR].I / 100.0f;
     navPID_PARAM.kD = (float)pidProfile->pid[PID_NAVR].D / 1000.0f;
@@ -330,6 +407,10 @@ void GPS_set_next_wp(int32_t *lat, int32_t *lon)
     waypoint_speed_gov = navigationConfig()->nav_speed_min;
 }
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
 ////////////////////////////////////////////////////////////////////////////////////
 // Check if we missed the destination somehow
 //
@@ -368,6 +449,10 @@ static void GPS_calc_location_error(int32_t *target_lat, int32_t *target_lng, in
     error[LAT] = *target_lat - *gps_lat;        // Y Error
 }
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
 ////////////////////////////////////////////////////////////////////////////////////
 // Calculate nav_lat and nav_lon from the x and y error and the speed
 //
@@ -486,6 +571,10 @@ static int32_t wrap_18000(int32_t error)
     return error;
 }
 
+<<<<<<< HEAD
+#ifdef NAV
+=======
+>>>>>>> test
 static int32_t wrap_36000(int32_t angle)
 {
     if (angle > 36000)

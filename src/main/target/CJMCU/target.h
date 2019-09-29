@@ -107,6 +107,10 @@
 
 #define DEFAULT_RX_FEATURE      FEATURE_RX_PPM
 #define USE_RX_MSP
+<<<<<<< HEAD
+#define SPEKTRUM_BIND
+=======
+>>>>>>> test
 
 #endif //USE_RX_NRF24
 

@@ -331,10 +331,17 @@ void processSmartPortTelemetry(smartPortPayload_t *payload, volatile bool *clear
         // unless we start receiving other sensors' packets
 
 #if defined(USE_MSP_OVER_TELEMETRY)
+<<<<<<< HEAD
+        if (smartPortRxBuffer.frameId == FSSP_MSPC_FRAME) {
+            // Pass only the payload: skip sensorId & frameId
+            uint8_t *frameStart = (uint8_t *)&smartPortRxBuffer + SMARTPORT_PAYLOAD_OFFSET;
+            smartPortMspReplyPending = handleMspFrame(frameStart, SMARTPORT_PAYLOAD_SIZE);
+=======
         if (payload->frameId == FSSP_MSPC_FRAME_SMARTPORT || payload->frameId == FSSP_MSPC_FRAME_FPORT) {
             // Pass only the payload: skip frameId
             uint8_t *frameStart = (uint8_t *)&payload->valueId;
             smartPortMspReplyPending = handleMspFrame(frameStart, SMARTPORT_MSP_PAYLOAD_SIZE);
+>>>>>>> test
         }
 #endif
     }

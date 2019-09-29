@@ -57,6 +57,12 @@
 #define JEDEC_ID_WINBOND_W25Q64        0xEF4017
 #define JEDEC_ID_WINBOND_W25Q128       0xEF4018
 #define JEDEC_ID_WINBOND_W25Q256       0xEF4019
+<<<<<<< HEAD
+
+#define DISABLE_M25P16       IOHi(bus->busdev_u.spi.csnPin); __NOP()
+#define ENABLE_M25P16        __NOP(); IOLo(bus->busdev_u.spi.csnPin)
+=======
+>>>>>>> test
 
 static busDevice_t busInstance;
 static busDevice_t *bus;
@@ -218,7 +224,11 @@ static bool m25p16_readIdentification(void)
 
     if (geometry.totalSize > 16 * 1024 * 1024) {
         isLargeFlash = true;
+<<<<<<< HEAD
+        m25p16_performOneByteCommand(W25Q256_INSTRUCTION_ENTER_4BYTE_ADDRESS_MODE);
+=======
         m25p16_performOneByteCommand(bus, W25Q256_INSTRUCTION_ENTER_4BYTE_ADDRESS_MODE);
+>>>>>>> test
     }
 
     couldBeBusy = true; // Just for luck we'll assume the chip could be busy even though it isn't specced to be
@@ -280,12 +290,21 @@ void m25p16_setCommandAddress(uint8_t *buf, uint32_t address, bool useLongAddres
 void m25p16_eraseSector(uint32_t address)
 {
     uint8_t out[5] = { M25P16_INSTRUCTION_SECTOR_ERASE };
+<<<<<<< HEAD
+
+    m25p16_setCommandAddress(&out[1], address, isLargeFlash);
+=======
+>>>>>>> test
 
     m25p16_setCommandAddress(&out[1], address, isLargeFlash);
 
     m25p16_waitForReady(SECTOR_ERASE_TIMEOUT_MILLIS);
 
+<<<<<<< HEAD
+    spiTransfer(bus->busdev_u.spi.instance, out, NULL, isLargeFlash ? 5 : 4);
+=======
     m25p16_writeEnable(bus);
+>>>>>>> test
 
     m25p16_transfer(bus, out, NULL, sizeof(out));
 }
@@ -303,6 +322,11 @@ static uint32_t currentWriteAddress;
 
 void m25p16_pageProgramBegin(uint32_t address)
 {
+<<<<<<< HEAD
+    uint8_t command[5] = { M25P16_INSTRUCTION_PAGE_PROGRAM };
+
+    m25p16_setCommandAddress(&command[1], address, isLargeFlash);
+=======
     currentWriteAddress = address;
 }
 
@@ -311,6 +335,7 @@ void m25p16_pageProgramContinue(const uint8_t *data, int length)
     uint8_t command[5] = { M25P16_INSTRUCTION_PAGE_PROGRAM };
 
     m25p16_setCommandAddress(&command[1], currentWriteAddress, isLargeFlash);
+>>>>>>> test
 
     m25p16_waitForReady(DEFAULT_TIMEOUT_MILLIS);
 
@@ -319,6 +344,10 @@ void m25p16_pageProgramContinue(const uint8_t *data, int length)
     m25p16_enable(bus);
 
     spiTransfer(bus->busdev_u.spi.instance, command, NULL, isLargeFlash ? 5 : 4);
+<<<<<<< HEAD
+}
+=======
+>>>>>>> test
 
     spiTransfer(bus->busdev_u.spi.instance, data, NULL, length);
 

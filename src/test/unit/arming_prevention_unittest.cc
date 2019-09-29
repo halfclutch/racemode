@@ -527,10 +527,13 @@ TEST(ArmingPreventionTest, WhenUsingSwitched3DModeThenNormalThrottleArmingCondit
     modeActivationConditionsMutable(0)->modeId = BOXARM;
     modeActivationConditionsMutable(0)->range.startStep = CHANNEL_VALUE_TO_STEP(1750);
     modeActivationConditionsMutable(0)->range.endStep = CHANNEL_VALUE_TO_STEP(CHANNEL_RANGE_MAX);
+<<<<<<< HEAD
+=======
     modeActivationConditionsMutable(1)->auxChannelIndex = 1;
     modeActivationConditionsMutable(1)->modeId = BOX3DONASWITCH;
     modeActivationConditionsMutable(1)->range.startStep = CHANNEL_VALUE_TO_STEP(1750);
     modeActivationConditionsMutable(1)->range.endStep = CHANNEL_VALUE_TO_STEP(CHANNEL_RANGE_MAX);
+>>>>>>> test
     useRcControlsConfig(NULL);
 
     // and

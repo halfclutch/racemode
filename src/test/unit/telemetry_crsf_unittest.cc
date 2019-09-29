@@ -336,7 +336,10 @@ int32_t getMAhDrawn(void){
 bool sendMspReply(uint8_t, mspResponseFnPtr) { return false; }
 bool handleMspFrame(uint8_t *, int)  { return false; }
 void crsfScheduleMspResponse(void) {};
+<<<<<<< HEAD
+=======
 bool isBatteryVoltageAvailable(void) { return true; }
 bool isAmperageAvailable(void) { return true; }
+>>>>>>> test
 
 }

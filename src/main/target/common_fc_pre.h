@@ -128,7 +128,12 @@
 
 #if (FLASH_SIZE > 128)
 #define USE_CAMERA_CONTROL
+<<<<<<< HEAD
+#define USE_GYRO_OVERFLOW_CHECK
+#define USE_HUFFMAN
+=======
 #define USE_CMS
+>>>>>>> test
 #define USE_COPY_PROFILE_CMS_MENU
 #define USE_GYRO_OVERFLOW_CHECK
 #define USE_HUFFMAN
@@ -149,7 +154,7 @@
 #define USE_VTX_TRAMP
 
 #ifdef USE_SERIALRX_SPEKTRUM
-#define USE_SPEKTRUM_BIND
+#define SPEKTRUM_BIND
 #define USE_SPEKTRUM_BIND_PLUG
 #define USE_SPEKTRUM_REAL_RSSI
 #define USE_SPEKTRUM_FAKE_RSSI
@@ -161,6 +166,11 @@
 #endif
 
 #if (FLASH_SIZE > 256)
+<<<<<<< HEAD
+// Temporarily moved GPS here because of overflowing flash size on F3
+#define GPS
+#define NAV
+=======
 #define USE_ALT_HOLD
 #define USE_DASHBOARD
 #define USE_GPS
@@ -176,5 +186,6 @@
 #define USE_TELEMETRY_IBUS_EXTENDED
 #define USE_TELEMETRY_JETIEXBUS
 #define USE_TELEMETRY_MAVLINK
+>>>>>>> test
 #define USE_UNCOMMON_MIXERS
 #endif

@@ -690,6 +690,7 @@ static void timCCxHandler(TIM_TypeDef *tim, timerConfig_t *timerConfig)
                 timerConfig->forcedOverflowTimerValue = 0;
             } else {
                 capture = tim->ARR;
+<<<<<<< HEAD
             }
 
             timerOvrHandlerRec_t *cb = timerConfig->overflowCallbackActive;
@@ -697,6 +698,15 @@ static void timCCxHandler(TIM_TypeDef *tim, timerConfig_t *timerConfig)
                 cb->fn(cb, capture);
                 cb = cb->next;
             }
+=======
+            }
+
+            timerOvrHandlerRec_t *cb = timerConfig->overflowCallbackActive;
+            while (cb) {
+                cb->fn(cb, capture);
+                cb = cb->next;
+            }
+>>>>>>> test
             break;
         }
         case __builtin_clz(TIM_IT_CC1):
@@ -1003,6 +1013,12 @@ uint16_t timerGetPrescalerByDesiredHertz(TIM_TypeDef *tim, uint32_t hz)
 
 HAL_StatusTypeDef TIM_DMACmd(TIM_HandleTypeDef *htim, uint32_t Channel, FunctionalState NewState)
 {
+<<<<<<< HEAD
+    /* Check the parameters */
+    assert_param(IS_TIM_CCXN_INSTANCE(htim->Instance, Channel));
+
+=======
+>>>>>>> test
     switch (Channel) {
     case TIM_CHANNEL_1: {
         if (NewState != DISABLE) {
@@ -1055,6 +1071,8 @@ HAL_StatusTypeDef TIM_DMACmd(TIM_HandleTypeDef *htim, uint32_t Channel, Function
     htim->State = HAL_TIM_STATE_READY;
     /* Return function status */
     return HAL_OK;
+<<<<<<< HEAD
+=======
 }
 
 HAL_StatusTypeDef DMA_SetCurrDataCounter(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length)
@@ -1122,4 +1140,76 @@ HAL_StatusTypeDef DMA_SetCurrDataCounter(TIM_HandleTypeDef *htim, uint32_t Chann
     }
     /* Return function status */
     return HAL_OK;
+>>>>>>> test
 }
+
+HAL_StatusTypeDef DMA_SetCurrDataCounter(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length)
+{
+    /* Check the parameters */
+    assert_param(IS_TIM_CCX_INSTANCE(htim->Instance, Channel));
+
+    if ((htim->State == HAL_TIM_STATE_BUSY)) {
+        return HAL_BUSY;
+    } else if ((htim->State == HAL_TIM_STATE_READY)) {
+        if (((uint32_t) pData == 0) && (Length > 0)) {
+            return HAL_ERROR;
+        } else {
+            htim->State = HAL_TIM_STATE_BUSY;
+        }
+    }
+    switch (Channel) {
+    case TIM_CHANNEL_1: {
+        /* Set the DMA Period elapsed callback */
+        htim->hdma[TIM_DMA_ID_CC1]->XferCpltCallback = HAL_TIM_DMADelayPulseCplt;
+
+        /* Set the DMA error callback */
+        htim->hdma[TIM_DMA_ID_CC1]->XferErrorCallback = HAL_TIM_DMAError;
+
+        /* Enable the DMA Stream */
+        HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t) pData, (uint32_t) & htim->Instance->CCR1, Length);
+    }
+        break;
+
+    case TIM_CHANNEL_2: {
+        /* Set the DMA Period elapsed callback */
+        htim->hdma[TIM_DMA_ID_CC2]->XferCpltCallback = HAL_TIM_DMADelayPulseCplt;
+
+        /* Set the DMA error callback */
+        htim->hdma[TIM_DMA_ID_CC2]->XferErrorCallback = HAL_TIM_DMAError;
+
+        /* Enable the DMA Stream */
+        HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC2], (uint32_t) pData, (uint32_t) & htim->Instance->CCR2, Length);
+    }
+        break;
+
+    case TIM_CHANNEL_3: {
+        /* Set the DMA Period elapsed callback */
+        htim->hdma[TIM_DMA_ID_CC3]->XferCpltCallback = HAL_TIM_DMADelayPulseCplt;
+
+        /* Set the DMA error callback */
+        htim->hdma[TIM_DMA_ID_CC3]->XferErrorCallback = HAL_TIM_DMAError;
+
+        /* Enable the DMA Stream */
+        HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC3], (uint32_t) pData, (uint32_t) & htim->Instance->CCR3, Length);
+    }
+        break;
+
+    case TIM_CHANNEL_4: {
+        /* Set the DMA Period elapsed callback */
+        htim->hdma[TIM_DMA_ID_CC4]->XferCpltCallback = HAL_TIM_DMADelayPulseCplt;
+
+        /* Set the DMA error callback */
+        htim->hdma[TIM_DMA_ID_CC4]->XferErrorCallback = HAL_TIM_DMAError;
+
+        /* Enable the DMA Stream */
+        HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC4], (uint32_t) pData, (uint32_t) & htim->Instance->CCR4, Length);
+    }
+        break;
+
+    default:
+        break;
+    }
+    /* Return function status */
+    return HAL_OK;
+}
+

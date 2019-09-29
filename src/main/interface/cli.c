@@ -3063,6 +3063,11 @@ static void cliStatus(char *cmdline)
     const int systemRate = getTaskDeltaTime(TASK_SYSTEM) == 0 ? 0 : (int)(1000000.0f / ((float)getTaskDeltaTime(TASK_SYSTEM)));
     cliPrintLinef("CPU:%d%%, cycle time: %d, GYRO rate: %d, RX rate: %d, System rate: %d",
             constrain(averageSystemLoadPercent, 0, 100), getTaskDeltaTime(TASK_GYROPID), gyroRate, rxRate, systemRate);
+<<<<<<< HEAD:src/main/fc/cli.c
+#if defined(OSD) || !defined(MINIMAL_CLI)
+    /* Flag strings are present if OSD is compiled so may as well use them even with MINIMAL_CLI */
+=======
+>>>>>>> test:src/main/interface/cli.c
     cliPrint("Arming disable flags:");
     armingDisableFlags_e flags = getArmingDisableFlags();
     while (flags) {
@@ -3071,6 +3076,12 @@ static void cliStatus(char *cmdline)
         cliPrintf(" %s", armingDisableFlagNames[bitpos]);
     }
     cliPrintLinefeed();
+<<<<<<< HEAD:src/main/fc/cli.c
+#else
+    cliPrintLinef("Arming disable flags: 0x%x", getArmingDisableFlags());
+#endif
+=======
+>>>>>>> test:src/main/interface/cli.c
 }
 
 #ifndef SKIP_TASK_STATISTICS
@@ -3189,7 +3200,7 @@ const cliResourceValue_t resourceTable[] = {
     { OWNER_I2C_SDA,       PG_I2C_CONFIG, offsetof(i2cConfig_t, ioTagSda[0]), I2CDEV_COUNT },
 #endif
     { OWNER_LED,           PG_STATUS_LED_CONFIG, offsetof(statusLedConfig_t, ioTags[0]), STATUS_LED_NUMBER },
-#ifdef USE_SPEKTRUM_BIND
+#ifdef SPEKTRUM_BIND
     { OWNER_RX_BIND,       PG_RX_CONFIG, offsetof(rxConfig_t, spektrum_bind_pin_override_ioTag), 0 },
     { OWNER_RX_BIND_PLUG,  PG_RX_CONFIG, offsetof(rxConfig_t, spektrum_bind_plug_ioTag), 0 },
 #endif
@@ -3699,8 +3710,13 @@ const clicmd_t cmdTable[] = {
     CLI_COMMAND_DEF("flash_write", NULL, "<address> <message>", cliFlashWrite),
 #endif
 #endif
+<<<<<<< HEAD:src/main/fc/cli.c
+#ifdef USE_RX_FRSKY_D
+    CLI_COMMAND_DEF("frsky_bind", "initiate binding for FrSky RX", NULL, cliFrSkyBind),
+=======
 #ifdef USE_RX_FRSKY_SPI
     CLI_COMMAND_DEF("frsky_bind", "initiate binding for FrSky SPI RX", NULL, cliFrSkyBind),
+>>>>>>> test:src/main/interface/cli.c
 #endif
     CLI_COMMAND_DEF("get", "get variable value", "[name]", cliGet),
 #ifdef USE_GPS

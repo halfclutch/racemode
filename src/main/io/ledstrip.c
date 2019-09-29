@@ -598,9 +598,15 @@ static void applyLedVtxLayer(bool updateNow, timeUs_t *timer)
 
     if (updateNow) {
         // keep counter running, so it stays in sync with vtx
+<<<<<<< HEAD
+        active = vtxCommonGetBandAndChannel(&band, &channel);
+        vtxCommonGetPowerIndex(&power);
+        vtxCommonGetPitMode(&pit);
+=======
         vtxCommonGetBandAndChannel(vtxDevice, &band, &channel);
         vtxCommonGetPowerIndex(vtxDevice, &power);
         vtxCommonGetPitMode(vtxDevice, &pit);
+>>>>>>> test
 
         frequency = vtx58frequencyTable[band - 1][channel - 1]; //subtracting 1 from band and channel so that correct frequency is returned.
                                                                 //might not be correct for tramp but should fix smart audio.

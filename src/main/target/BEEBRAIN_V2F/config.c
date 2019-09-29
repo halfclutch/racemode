@@ -21,7 +21,11 @@
 
 #include <platform.h>
 
+<<<<<<< HEAD
+#ifdef TARGET_CONFIG
+=======
 #ifdef USE_TARGET_CONFIG
+>>>>>>> test
 
 #include "common/axis.h"
 #include "common/maths.h"
@@ -39,8 +43,11 @@
 #include "flight/mixer.h"
 #include "flight/pid.h"
 
+<<<<<<< HEAD
+=======
 #include "pg/vcd.h"
 
+>>>>>>> test
 #include "rx/rx.h"
 
 #include "io/serial.h"
@@ -85,10 +92,16 @@ void targetConfiguration(void)
     for (uint8_t rateProfileIndex = 0; rateProfileIndex < CONTROL_RATE_PROFILE_COUNT; rateProfileIndex++) {
         controlRateConfig_t *controlRateConfig = controlRateProfilesMutable(rateProfileIndex);
 
+<<<<<<< HEAD
+        controlRateConfig->rcYawRate8      = 120;
+        controlRateConfig->rcExpo8         = 15;
+        controlRateConfig->rcYawExpo8      = 15;
+=======
         controlRateConfig->rcRates[FD_YAW] = 120;
         controlRateConfig->rcExpo[FD_ROLL] = 15;
         controlRateConfig->rcExpo[FD_PITCH] = 15;
         controlRateConfig->rcExpo[FD_YAW]  = 15;
+>>>>>>> test
         controlRateConfig->rates[FD_ROLL]  = 85;
         controlRateConfig->rates[FD_PITCH] = 85;
     }
@@ -158,7 +171,11 @@ void targetConfiguration(void)
     }
 #else
     // Frsky version
+<<<<<<< HEAD
+    serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIALRX_UART)].functionMask = FUNCTION_TELEMETRY_FRSKY | FUNCTION_RX_SERIAL;
+=======
     serialConfigMutable()->portConfigs[findSerialPortIndexByIdentifier(SERIALRX_UART)].functionMask = FUNCTION_TELEMETRY_FRSKY_HUB | FUNCTION_RX_SERIAL;
+>>>>>>> test
     rxConfigMutable()->rssi_channel = BBV2_FRSKY_RSSI_CH_IDX;
     rxFailsafeChannelConfig_t *channelFailsafeConfig = rxFailsafeChannelConfigsMutable(BBV2_FRSKY_RSSI_CH_IDX - 1);
     channelFailsafeConfig->mode = RX_FAILSAFE_MODE_SET;

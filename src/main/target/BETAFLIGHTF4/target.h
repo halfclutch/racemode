@@ -48,11 +48,19 @@
 #define MPU_INT_EXTI            PC4
 #define USE_MPU_DATA_READY_SIGNAL
 
+<<<<<<< HEAD
+#define BARO
+#define USE_BARO_BMP280
+#define USE_BARO_MS5611
+
+#define MAG
+=======
 #define USE_BARO
 #define USE_BARO_BMP280
 #define USE_BARO_MS5611
 
 #define USE_MAG
+>>>>>>> test
 #define USE_MAG_HMC5883
 
 #define USE_MAX7456

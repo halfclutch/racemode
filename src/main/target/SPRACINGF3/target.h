@@ -89,10 +89,19 @@
 #endif
 
 #if defined(FLIP32F3OSD)
+<<<<<<< HEAD
+#define SONAR
+#define SONAR_TRIGGER_PIN       PB0
+#define SONAR_ECHO_PIN          PB1
+
+#elif defined(RMDO)
+#undef GPS
+=======
 #define USE_RANGEFINDER
 #define USE_RANGEFINDER_HCSR04
 #define RANGEFINDER_HCSR04_TRIGGER_PIN       PB0
 #define RANGEFINDER_HCSR04_ECHO_PIN          PB1
+>>>>>>> test
 
 #elif defined(ZCOREF3)
 #define USE_MAG_DATA_READY_SIGNAL

@@ -225,4 +225,62 @@ void spiSetDivisor(SPI_TypeDef *instance, uint16_t divisor)
     LL_SPI_SetBaudRatePrescaler(instance, divisor ? (ffs(divisor | 0x100) - 2) << SPI_CR1_BR_Pos : 0);
     LL_SPI_Enable(instance);
 }
+<<<<<<< HEAD
+
+uint16_t spiGetErrorCounter(SPI_TypeDef *instance)
+{
+    SPIDevice device = spiDeviceByInstance(instance);
+    if (device == SPIINVALID) {
+        return 0;
+    }
+    return spiDevice[device].errorCount;
+}
+
+void spiResetErrorCounter(SPI_TypeDef *instance)
+{
+    SPIDevice device = spiDeviceByInstance(instance);
+    if (device != SPIINVALID) {
+        spiDevice[device].errorCount = 0;
+    }
+}
+
+bool spiBusWriteRegister(const busDevice_t *bus, uint8_t reg, uint8_t data)
+{
+    IOLo(bus->busdev_u.spi.csnPin);
+    spiTransferByte(bus->busdev_u.spi.instance, reg);
+    spiTransferByte(bus->busdev_u.spi.instance, data);
+    IOHi(bus->busdev_u.spi.csnPin);
+
+    return true;
+}
+
+bool spiBusReadRegisterBuffer(const busDevice_t *bus, uint8_t reg, uint8_t *data, uint8_t length)
+{
+    IOLo(bus->busdev_u.spi.csnPin);
+    spiTransferByte(bus->busdev_u.spi.instance, reg | 0x80); // read transaction
+    spiTransfer(bus->busdev_u.spi.instance, NULL, data, length);
+    IOHi(bus->busdev_u.spi.csnPin);
+
+    return true;
+}
+
+uint8_t spiBusReadRegister(const busDevice_t *bus, uint8_t reg)
+{
+    uint8_t data;
+    IOLo(bus->busdev_u.spi.csnPin);
+    spiTransferByte(bus->busdev_u.spi.instance, reg | 0x80); // read transaction
+    spiTransfer(bus->busdev_u.spi.instance, NULL, &data, 1);
+    IOHi(bus->busdev_u.spi.csnPin);
+
+    return data;
+}
+
+void spiBusSetInstance(busDevice_t *bus, SPI_TypeDef *instance)
+{
+    bus->bustype = BUSTYPE_SPI;
+    bus->busdev_u.spi.instance = instance;
+}
+
+=======
+>>>>>>> test
 #endif

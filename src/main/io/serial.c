@@ -258,7 +258,11 @@ serialPort_t *findNextSharedSerialPort(uint16_t functionMask, serialPortFunction
     return NULL;
 }
 
+<<<<<<< HEAD
+#ifdef TELEMETRY
+=======
 #ifdef USE_TELEMETRY
+>>>>>>> test
 #define ALL_FUNCTIONS_SHARABLE_WITH_MSP (FUNCTION_BLACKBOX | TELEMETRY_PORT_FUNCTIONS_MASK)
 #else
 #define ALL_FUNCTIONS_SHARABLE_WITH_MSP (FUNCTION_BLACKBOX)

@@ -56,7 +56,13 @@ static FAST_RAM bool pidStabilisationEnabled;
 
 static FAST_RAM bool inCrashRecoveryMode = false;
 
+<<<<<<< HEAD
+static bool inCrashRecoveryMode = false;
+
+float axisPID_P[3], axisPID_I[3], axisPID_D[3];
+=======
 FAST_RAM float axisPID_P[3], axisPID_I[3], axisPID_D[3], axisPIDSum[3];
+>>>>>>> test
 
 static FAST_RAM float dT;
 
@@ -559,5 +565,9 @@ void pidController(const pidProfile_t *pidProfile, const rollAndPitchTrims_t *an
 
 bool crashRecoveryModeActive(void)
 {
+<<<<<<< HEAD
+	return inCrashRecoveryMode;
+=======
     return inCrashRecoveryMode;
+>>>>>>> test
 }

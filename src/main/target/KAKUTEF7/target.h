@@ -15,7 +15,11 @@
 
 #pragma once
 
+<<<<<<< HEAD
+//#define TARGET_CONFIG
+=======
 //#define USE_TARGET_CONFIG
+>>>>>>> test
 
 #define TARGET_BOARD_IDENTIFIER "KTF7"
 #define USBD_PRODUCT_STRING "KakuteF7"
@@ -25,8 +29,13 @@
 #define BEEPER                  PD15
 #define BEEPER_INVERTED
 
+<<<<<<< HEAD
+#define ACC
+#define GYRO
+=======
 #define USE_ACC
 #define USE_GYRO
+>>>>>>> test
 #define USE_DUAL_GYRO
 
 // ICM-20689
@@ -118,6 +127,10 @@
 #define SPI4_MOSI_PIN           PE6
 
 
+<<<<<<< HEAD
+#define OSD
+=======
+>>>>>>> test
 #define USE_MAX7456
 #define MAX7456_SPI_INSTANCE    SPI2
 #define MAX7456_SPI_CS_PIN      SPI2_NSS_PIN
@@ -136,11 +149,30 @@
 #define SDCARD_SPI_FULL_SPEED_CLOCK_DIVIDER      8 // 27MHz
 
 #define SDCARD_DMA_STREAM_TX_FULL             DMA2_Stream5
+<<<<<<< HEAD
+#define SDCARD_DMA_TX                         DMA2
+#define SDCARD_DMA_STREAM_TX                  1
+#define SDCARD_DMA_CLK                        LL_AHB1_GRP1_PERIPH_DMA2
+
+#define SDCARD_DMA_CHANNEL_TX_COMPLETE_FLAG   DMA_FLAG_TCIF1_5
+#define SDCARD_DMA_CHANNEL                    DMA_CHANNEL_3
+=======
 #define SDCARD_DMA_CHANNEL                    3
+>>>>>>> test
 
 #define USE_I2C
 #define USE_I2C_DEVICE_1
 #define I2C_DEVICE              (I2CDEV_1)
+<<<<<<< HEAD
+#define I2C1_SCL                PB6        
+#define I2C1_SDA                PB7        
+
+#define BARO
+#define USE_BARO_BMP280
+#define BARO_I2C_INSTANCE     I2C_DEVICE
+
+#define MAG
+=======
 #define I2C1_SCL                PB6
 #define I2C1_SDA                PB7
 
@@ -149,6 +181,7 @@
 #define BARO_I2C_INSTANCE     I2C_DEVICE
 
 #define USE_MAG
+>>>>>>> test
 #define USE_MAG_HMC5883
 #define MAG_I2C_INSTANCE      I2C_DEVICE
 
@@ -162,6 +195,11 @@
 #define VBAT_ADC_PIN            PC3
 #define RSSI_ADC_PIN            PC5
 
+<<<<<<< HEAD
+#define LED_STRIP
+
+=======
+>>>>>>> test
 #define ENABLE_BLACKBOX_LOGGING_ON_SDCARD_BY_DEFAULT
 
 #define DEFAULT_FEATURES        (FEATURE_OSD)

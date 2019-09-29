@@ -121,7 +121,11 @@
 #define CURRENT_METER_ADC_PIN    PA5
 #define VBAT_SCALE_DEFAULT       119
 
+<<<<<<< HEAD
+#define TRANSPONDER
+=======
 #define USE_TRANSPONDER
+>>>>>>> test
 
 #define DEFAULT_RX_FEATURE FEATURE_RX_PPM
 

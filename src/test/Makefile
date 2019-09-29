@@ -286,6 +286,8 @@ huffman_unittest_SRC := \
 huffman_unittest_DEFINES := \
 		USE_HUFFMAN
 
+<<<<<<< HEAD
+=======
 rcdevice_unittest_SRC := \
 		$(USER_DIR)/common/crc.c \
 		$(USER_DIR)/common/bitarray.c \
@@ -297,6 +299,7 @@ rcdevice_unittest_SRC := \
 rcdevice_unittest_DEFINES := \
 		USE_RCDEVICE
 
+>>>>>>> test
 # Please tweak the following variable definitions as needed by your
 # project, except GTEST_HEADERS, which you can use in your own targets
 # but shouldn't modify.

@@ -120,6 +120,12 @@
 #define UART6_TX_PIN            PC6
 
 #define SERIAL_PORT_COUNT       6
+<<<<<<< HEAD
+//SPECKTRUM BIND
+#define CMS
+#define USE_MSP_DISPLAYPORT
+=======
+>>>>>>> test
 /*---------------------------------*/
 
 /*-------------SPIs----------------*/

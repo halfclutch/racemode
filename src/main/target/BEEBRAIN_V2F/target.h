@@ -93,7 +93,11 @@
 #define ADC_INSTANCE            ADC3
 #define VBAT_ADC_PIN            PB13
 
+<<<<<<< HEAD:src/main/target/BEEBRAIN_V2F/target.h
+#define TRANSPONDER
+=======
 #define USE_TRANSPONDER
+>>>>>>> test:src/main/target/BEEBRAIN_V2F/target.h
 #define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
 #define SERIALRX_UART           SERIAL_PORT_USART2
 #define RX_CHANNELS_TAER

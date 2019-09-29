@@ -45,14 +45,22 @@
 #define MPU_INT_EXTI            PC3
 #define USE_MPU_DATA_READY_SIGNAL
 
+<<<<<<< HEAD
+#define GYRO
+=======
 #define USE_GYRO
+>>>>>>> test
 #define USE_GYRO_SPI_MPU6500
 #define GYRO_MPU6500_ALIGN      CW180_DEG
 
 #define USE_GYRO_SPI_ICM20689
 #define GYRO_ICM20689_ALIGN     CW90_DEG
 
+<<<<<<< HEAD
+#define ACC
+=======
 #define USE_ACC
+>>>>>>> test
 #define USE_ACC_SPI_MPU6500
 #define ACC_MPU6500_ALIGN       CW180_DEG
 
@@ -68,14 +76,24 @@
 #define I2C1_SDA                PB7        // SDA pad
 #define BARO_I2C_INSTANCE       (I2CDEV_1)
 
+<<<<<<< HEAD
+#define BARO
+=======
 #define USE_BARO
+>>>>>>> test
 #define USE_BARO_BMP280
 #define USE_BARO_MS5611
 #define USE_BARO_BMP085
 
+<<<<<<< HEAD
+//*********** Magnetometer / Compass ************* 
+#define MAG
+#define USE_MAG_HMC5883 
+=======
 //*********** Magnetometer / Compass *************
 #define USE_MAG
 #define USE_MAG_HMC5883
+>>>>>>> test
 
 // *************** SD Card **************************
 #define USE_SDCARD
@@ -151,6 +169,11 @@
 #define DEFAULT_CURRENT_METER_SOURCE CURRENT_METER_ADC
 #define CURRENT_METER_SCALE_DEFAULT 179
 
+<<<<<<< HEAD
+#define LED_STRIP
+
+=======
+>>>>>>> test
 #define USE_ESCSERIAL
 #define USE_SERIAL_4WAY_BLHELI_INTERFACE
 

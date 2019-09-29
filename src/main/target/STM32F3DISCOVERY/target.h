@@ -31,7 +31,11 @@
 
 #define CONFIG_FASTLOOP_PREFERRED_ACC ACC_NONE
 
+<<<<<<< HEAD
+#undef TELEMETRY_JETIEXBUS // ROM SAVING
+=======
 #undef USE_OSD // ROM SAVING
+>>>>>>> test
 
 #define CURRENT_TARGET_CPU_VOLTAGE 3.0
 

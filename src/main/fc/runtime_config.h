@@ -50,9 +50,13 @@ typedef enum {
     ARMING_DISABLED_CMS_MENU        = (1 << 12),
     ARMING_DISABLED_OSD_MENU        = (1 << 13),
     ARMING_DISABLED_BST             = (1 << 14),
+<<<<<<< HEAD
+    ARMING_DISABLED_ARM_SWITCH      = (1 << 15), // Needs to be the last element, since it's always activated if one of the others is active when arming
+=======
     ARMING_DISABLED_MSP             = (1 << 15),
     ARMING_DISABLED_RUNAWAY_TAKEOFF = (1 << 16),
     ARMING_DISABLED_ARM_SWITCH      = (1 << 17), // Needs to be the last element, since it's always activated if one of the others is active when arming
+>>>>>>> test
 } armingDisableFlags_e;
 
 #define ARMING_DISABLE_FLAGS_COUNT 18

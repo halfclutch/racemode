@@ -27,8 +27,13 @@
 const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
 
 #if defined(OMNIBUSF4SD) || defined(EXUAVF4PRO)
+<<<<<<< HEAD
+    DEF_TIM(TIM10, CH1, PB8,  TIM_USE_PWM | TIM_USE_PPM,   TIMER_OUTPUT_NONE,     0), // PPM
+    DEF_TIM(TIM4,  CH4, PB9,  TIM_USE_PWM,                 TIMER_OUTPUT_NONE,     0), // S2_IN
+=======
     DEF_TIM(TIM10, CH1, PB8,  TIM_USE_PWM | TIM_USE_PPM,   0, 0), // PPM
     DEF_TIM(TIM4,  CH4, PB9,  TIM_USE_PWM,                 0, 0), // S2_IN
+>>>>>>> test
 #else
     DEF_TIM(TIM12, CH1, PB14, TIM_USE_PWM | TIM_USE_PPM,   0, 0), // PPM
     DEF_TIM(TIM12, CH2, PB15, TIM_USE_PWM,                 0, 0), // S2_IN
@@ -45,8 +50,13 @@ const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
     DEF_TIM(TIM2,  CH3, PA2,  TIM_USE_MOTOR,               0, 0), // S4_OUT D1_ST1
 
 #if defined(OMNIBUSF4SD) || defined(EXUAVF4PRO)
+<<<<<<< HEAD
+    DEF_TIM(TIM5,  CH2, PA1,  TIM_USE_MOTOR,               TIMER_OUTPUT_STANDARD, 0), // S5_OUT
+    DEF_TIM(TIM4,  CH1, PB6,  TIM_USE_LED,                 TIMER_OUTPUT_STANDARD, 0), // LED strip for F4 V2 / F4-Pro-0X and later (RCD_CS for F4)
+=======
     DEF_TIM(TIM5,  CH2, PA1,  TIM_USE_MOTOR,               0, 0), // S5_OUT
     DEF_TIM(TIM4,  CH1, PB6,  TIM_USE_LED,                 0, 0), // LED strip for F4 V2 / F4-Pro-0X and later (RCD_CS for F4)
+>>>>>>> test
 #else
     DEF_TIM(TIM5,  CH2, PA1,  TIM_USE_MOTOR | TIM_USE_LED, 0, 0), // S5_OUT
 #endif

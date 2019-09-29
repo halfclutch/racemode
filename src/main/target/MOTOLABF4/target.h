@@ -133,6 +133,10 @@
 // Reserved pins, not connected
 //#define RSSI_ADC_GPIO_PIN       PC2
 
+<<<<<<< HEAD
+#define LED_STRIP
+=======
+>>>>>>> test
 #define USE_SERIAL_4WAY_BLHELI_INTERFACE
 
 #define ENABLE_BLACKBOX_LOGGING_ON_SDCARD_BY_DEFAULT

@@ -46,21 +46,33 @@
 #define MPU_INT_EXTI            PC3
 #define USE_MPU_DATA_READY_SIGNAL
 
+<<<<<<< HEAD
+#define GYRO
+=======
 #define USE_GYRO
+>>>>>>> test
 #define USE_GYRO_SPI_MPU6000
 #define GYRO_MPU6000_ALIGN      CW270_DEG
 
 #define USE_GYRO_SPI_MPU6500
 #define GYRO_MPU6500_ALIGN      CW180_DEG
 
+<<<<<<< HEAD
+#define ACC
+=======
 #define USE_ACC
+>>>>>>> test
 #define USE_ACC_SPI_MPU6000
 #define ACC_MPU6000_ALIGN       CW270_DEG
 
 #define USE_ACC_SPI_MPU6500
 #define ACC_MPU6500_ALIGN       CW180_DEG
 
+<<<<<<< HEAD
+#define MAG
+=======
 #define USE_MAG
+>>>>>>> test
 #define USE_MAG_HMC5883
 
 // *************** Baro **************************
@@ -167,6 +179,11 @@
 #define DEFAULT_VOLTAGE_METER_SOURCE    VOLTAGE_METER_ADC
 #define DEFAULT_CURRENT_METER_SOURCE    CURRENT_METER_ADC
 #define CURRENT_METER_SCALE_DEFAULT 179
+<<<<<<< HEAD
+
+#define LED_STRIP
+=======
+>>>>>>> test
 
 #define USE_ESCSERIAL
 #define ESCSERIAL_TIMER_TX_PIN PA3
